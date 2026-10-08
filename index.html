@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Centro de Reportes · Scania Zona Norte</title>
+<meta name="description" content="Centro de Reportes de la Zona Norte de Scania Chile" />
+<meta name="theme-color" content="#041E42" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Reportes ZN" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='13'%20fill='%23041E42'/%3E%3Crect%20x='13'%20y='32'%20width='8'%20height='19'%20rx='2'%20fill='%234A89F3'/%3E%3Crect%20x='28'%20y='21'%20width='8'%20height='30'%20rx='2'%20fill='%23FFFFFF'/%3E%3Crect%20x='43'%20y='12'%20width='8'%20height='39'%20rx='2'%20fill='%23EAAD06'/%3E%3C/svg%3E" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20180%20180'%3E%3Crect%20width='180'%20height='180'%20rx='38'%20fill='%23041E42'/%3E%3Crect%20x='38'%20y='92'%20width='22'%20height='52'%20rx='6'%20fill='%234A89F3'/%3E%3Crect%20x='79'%20y='60'%20width='22'%20height='84'%20rx='6'%20fill='%23FFFFFF'/%3E%3Crect%20x='120'%20y='34'%20width='22'%20height='110'%20rx='6'%20fill='%23EAAD06'/%3E%3C/svg%3E" />
+<style>
+:root{
+  --scania:#041E42;
+  --blue-700:#14345F;
+  --blue-500:#2058A8;
+  --blue-300:#4A89F3;
+  --blue-50:#E4E9F1;
+  --red:#D1001B;
+  --yellow:#EAAD06;
+  --green:#009E7E;
+  --g-50:#F6F8FA;
+  --g-100:#EDEFF3;
+  --g-200:#E0E5EB;
+  --g-400:#8A99B0;
+  --g-600:#5F728C;
+  --g-900:#242C37;
+  --bg:#EDEFF3;
+  --card:#FFFFFF;
+  --line:#E0E5EB;
+  --r:14px;
+  --r-sm:10px;
+  --shadow:0 1px 2px rgba(4,30,66,.06),0 8px 24px -12px rgba(4,30,66,.18);
+  --font:"Scania Sans","IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--g-900);
+  line-height:1.45;
+  min-height:100vh;
+  min-height:100dvh;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select{font-family:inherit;font-size:16px}
+button{cursor:pointer;border:0;background:none;color:inherit}
+a{color:var(--blue-500)}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 96px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:var(--scania);color:#fff;
+  padding:calc(env(safe-area-inset-top) + 12px) 0 12px;
+  box-shadow:0 2px 12px rgba(4,30,66,.28);
+}
+.topbar .wrap{display:flex;align-items:center;gap:12px;padding-bottom:0}
+.brand{display:flex;align-items:center;gap:11px;min-width:0;flex:1}
+.brand .mark{
+  width:38px;height:38px;border-radius:10px;flex:none;
+  background:rgba(255,255,255,.10);
+  display:grid;place-items:center;
+}
+.brand .mark svg{display:block}
+.brand h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand p{margin:1px 0 0;font-size:11.5px;color:#B9C7DB;letter-spacing:.4px;text-transform:uppercase}
+.iconbtn{
+  width:44px;height:44px;border-radius:11px;flex:none;
+  display:grid;place-items:center;color:#fff;
+  background:rgba(255,255,255,.08);
+  transition:background .15s;
+}
+.iconbtn:hover{background:rgba(255,255,255,.16)}
+.iconbtn.on{background:var(--yellow);color:var(--scania)}
+.iconbtn svg{display:block}
+
+/* Hero / status */
+.hero{padding:18px 0 4px}
+.hero h2{font-size:24px;margin:0 0 4px;font-weight:600;letter-spacing:-.2px}
+.hero p{margin:0;color:var(--g-600);font-size:13.5px}
+.statusbar{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin-top:12px;font-size:12.5px;color:var(--g-600);
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--g-400);flex:none}
+.dot.ok{background:var(--green)}
+.dot.warn{background:var(--yellow)}
+.dot.err{background:var(--red)}
+.statusbar .sep{width:1px;height:14px;background:var(--g-200)}
+.btn-refresh{
+  margin-left:auto;display:inline-flex;align-items:center;gap:7px;
+  padding:9px 14px;min-height:44px;border-radius:999px;
+  background:var(--card);border:1px solid var(--line);
+  color:var(--blue-700);font-weight:600;font-size:13px;
+  box-shadow:var(--shadow);
+}
+.btn-refresh:active{transform:translateY(1px)}
+.btn-refresh.spin svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Toolbar */
+.toolbar{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.search{
+  display:flex;align-items:center;gap:10px;
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  padding:0 8px 0 16px;box-shadow:var(--shadow);
+}
+.search svg{flex:none;color:var(--g-400)}
+.search input{
+  flex:1;border:0;outline:0;background:none;padding:14px 0;color:var(--g-900);
+}
+.search input::placeholder{color:var(--g-400)}
+.search .clr{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--g-400);flex:none}
+.search .clr:hover{background:var(--g-100)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  white-space:nowrap;padding:9px 15px;border-radius:999px;font-size:13.5px;font-weight:600;
+  background:var(--card);border:1px solid var(--line);color:var(--g-600);
+  transition:.15s;min-height:40px;display:inline-flex;align-items:center;
+}
+.chip:hover{border-color:var(--blue-300);color:var(--blue-700)}
+.chip.active{background:var(--scania);border-color:var(--scania);color:#fff}
+.chip .n{opacity:.55;margin-left:6px;font-variant-numeric:tabular-nums}
+
+/* Grid + cards */
+.section-label{margin:22px 2px 10px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:var(--g-600);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 16px 14px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:10px;
+  transition:border-color .15s,transform .1s;
+}
+.card:hover{border-color:var(--blue-300)}
+.card.off{opacity:.62;border-style:dashed}
+.card .top{display:flex;align-items:flex-start;gap:12px}
+.card .ico{
+  width:42px;height:42px;border-radius:11px;flex:none;display:grid;place-items:center;
+  background:var(--blue-50);color:var(--blue-500);
+}
+.card h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.1px}
+.card .desc{margin:3px 0 0;font-size:13px;color:var(--g-600)}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:11.5px;color:var(--g-400)}
+.tag{
+  display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;
+  background:var(--g-100);color:var(--g-600);
+}
+.tag.cat{background:var(--blue-50);color:var(--blue-700)}
+.tag.pdf{background:#FBE9EB;color:var(--red)}
+.tag.app{background:#E1F4F0;color:#00695C}
+.tag.hidden{background:#FBF2DC;color:#8A6400}
+.card .foot{display:flex;align-items:center;gap:10px;margin-top:2px}
+.btn-open{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 18px;min-height:46px;border-radius:11px;flex:1;
+  background:var(--scania);color:#fff;font-weight:600;font-size:14.5px;
+}
+.btn-open:hover{background:var(--blue-700)}
+.btn-open:active{transform:translateY(1px)}
+.btn-open[disabled],span.btn-open[aria-disabled]{background:var(--g-200);color:var(--g-600);cursor:not-allowed}
+a.btn-open{text-decoration:none}
+.card .updated{font-size:11.5px;color:var(--g-400);white-space:nowrap}
+
+/* Empty state */
+.empty{
+  background:var(--card);border:1px dashed var(--g-200);border-radius:var(--r);
+  padding:28px 20px;text-align:center;color:var(--g-600);font-size:14px;
+}
+.empty b{color:var(--g-900);display:block;margin-bottom:6px;font-size:15px}
+.empty .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.hint{background:var(--blue-50);border-radius:var(--r-sm);padding:12px 14px;font-size:12.5px;color:var(--blue-700);margin-top:14px}
+
+/* Footer */
+.foot-note{margin-top:26px;text-align:center;font-size:11.5px;color:var(--g-400);line-height:1.7}
+.foot-note b{color:var(--g-600)}
+
+/* Bottom sheet / modal */
+.scrim{position:fixed;inset:0;background:rgba(4,30,66,.55);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--card);
+  border-radius:20px 20px 0 0;max-height:88vh;overflow:auto;
+  transform:translateY(102%);transition:transform .25s cubic-bezier(.4,0,.2,1);
+  padding-bottom:calc(env(safe-area-inset-bottom) + 14px);
+}
+.sheet.open{transform:translateY(0)}
+@media(min-width:640px){
+  .sheet{left:50%;right:auto;bottom:auto;top:50%;width:520px;max-height:86vh;
+    transform:translate(-50%,-46%) scale(.98);opacity:0;border-radius:18px}
+  .sheet.open{transform:translate(-50%,-50%) scale(1);opacity:1}
+}
+.sheet-head{position:sticky;top:0;background:var(--card);display:flex;align-items:center;gap:12px;
+  padding:18px 18px 12px;border-bottom:1px solid var(--line);z-index:1}
+.sheet-head h3{margin:0;font-size:17px;font-weight:600;flex:1}
+.sheet-head .x{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--g-600)}
+.sheet-head .x:hover{background:var(--g-100)}
+.sheet-body{padding:16px 18px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--g-600);margin-bottom:6px}
+.field input{width:100%;padding:12px 13px;border:1px solid var(--g-200);border-radius:10px;outline:0;background:var(--g-50)}
+.field input:focus{border-color:var(--blue-300);background:#fff}
+.field .help{font-size:11.5px;color:var(--g-400);margin-top:5px;line-height:1.5}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  padding:13px 16px;min-height:48px;border-radius:11px;font-weight:600;font-size:15px;
+}
+.btn.primary{background:var(--scania);color:#fff}
+.btn.primary:hover{background:var(--blue-700)}
+.btn.ghost{background:var(--g-100);color:var(--g-900)}
+.btn.ghost:hover{background:var(--g-200)}
+.btn.warn{background:var(--red);color:#fff}
+.btn-row{display:flex;gap:10px;margin-top:4px}
+.divider{height:1px;background:var(--line);margin:18px 0}
+
+/* Admin list */
+.admin-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--g-100)}
+.admin-item .t{flex:1;min-width:0}
+.admin-item .t b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-item .t span{font-size:11.5px;color:var(--g-400)}
+.switch{position:relative;width:52px;height:31px;flex:none}
+.switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+.switch .track{position:absolute;inset:0;border-radius:999px;background:var(--g-200);transition:.2s}
+.switch .knob{position:absolute;top:3px;left:3px;width:25px;height:25px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.2s}
+.switch input:checked ~ .track{background:var(--green)}
+.switch input:checked ~ .knob{transform:translateX(21px)}
+
+/* Toast */
+.toast{
+  position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 22px);transform:translate(-50%,20px);
+  background:var(--scania);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;
+  z-index:90;opacity:0;pointer-events:none;transition:.25s;max-width:88%;text-align:center;
+  box-shadow:0 10px 30px -8px rgba(4,30,66,.5);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:var(--red)}
+.toast.ok{background:var(--green)}
+body.sheeton .toast{bottom:auto;top:calc(env(safe-area-inset-top) + 66px);transform:translate(-50%,-16px)}
+body.sheeton .toast.show{transform:translate(-50%,0)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="13" width="4" height="8" rx="1" fill="#4A89F3"/>
+          <rect x="10" y="8" width="4" height="13" rx="1" fill="#fff"/>
+          <rect x="17" y="3" width="4" height="18" rx="1" fill="#EAAD06"/>
+        </svg>
+      </span>
+      <div style="min-width:0">
+        <h1>Centro de Reportes</h1>
+        <p>Scania · Zona Norte</p>
+      </div>
+    </div>
+    <button class="iconbtn" id="btnAdmin" title="Modo administrador" aria-label="Modo administrador">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+      </svg>
+    </button>
+    <button class="iconbtn" id="btnCfg" title="Configuración" aria-label="Configuración">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h2>Reportes de la Zona Norte</h2>
+    <p>Iquique · Calama · Antofagasta · Copiapó · Coquimbo</p>
+    <div class="statusbar">
+      <span class="dot" id="stDot"></span>
+      <span id="stText">Cargando…</span>
+      <span class="sep" aria-hidden="true"></span>
+      <span id="stCorte">—</span>
+      <button class="btn-refresh" id="btnRefresh">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+        Actualizar
+      </button>
+    </div>
+  </section>
+
+  <section class="toolbar" aria-label="Buscar y filtrar">
+    <div class="search">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" inputmode="search" placeholder="Buscar reporte…" autocomplete="off" />
+      <button class="clr hidden" id="qClear" aria-label="Limpiar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <p class="section-label" id="gridLabel">Reportes</p>
+  <section class="grid" id="grid" aria-live="polite"></section>
+
+  <section class="empty hidden" id="empty">
+    <b>Sin resultados</b>
+    No hay reportes que coincidan con la búsqueda.
+    <div class="actions">
+      <button class="btn ghost" id="emptyClear" style="width:auto">Ver todos</button>
+    </div>
+  </section>
+
+  <p class="foot-note" id="foot">
+    Centro de Reportes · <b>Scania Zona Norte</b><br />
+    Los reportes abren en una pestaña nueva desde su enlace original.
+  </p>
+</main>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- Configuración -->
+<section class="sheet" id="sheetCfg" role="dialog" aria-modal="true" aria-labelledby="cfgTitle">
+  <div class="sheet-head">
+    <h3 id="cfgTitle">Configuración</h3>
+    <button class="x" data-close aria-label="Cerrar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="sheet-body">
+    <div class="field">
+      <label for="cfgSheet">Planilla de catálogo (Google Sheets · ID o enlace)</label>
+      <input id="cfgSheet" placeholder="https://docs.google.com/spreadsheets/d/…/edit" />
+      <div class="help">Hoja llamada <b>Catálogo</b>, compartida como «cualquiera con el enlace · Lector». Pega el enlace completo o solo el ID.</div>
+    </div>
+    <div class="field">
+      <label for="cfgGid">Pestaña (gid) — opcional</label>
+      <input id="cfgGid" placeholder="0" />
+      <div class="help">Si la hoja «Catálogo» no es la primera, pega su <b>gid</b> (el número que aparece tras <code>#gid=</code>).</div>
+    </div>
+    <div class="field">
+      <label for="cfgBackend">Servidor (Apps Script · URL /exec) — opcional</label>
+      <input id="cfgBackend" placeholder="https://script.google.com/macros/s/…/exec" />
+      <div class="help">Solo si quieres activar/desactivar reportes desde la app. Sin esto, editas la hoja directamente.</div>
+    </div>
+    <div class="field">
+      <label for="cfgToken">Clave del sistema — opcional</label>
+      <input id="cfgToken" type="password" placeholder="Clave definida en el script" />
+    </div>
+    <button class="btn primary" id="cfgSave">Guardar y recargar</button>
+    <div class="btn-row">
+      <button class="btn ghost" id="cfgTest">Probar conexión</button>
+      <button class="btn ghost" id="cfgReset">Restaurar ejemplo</button>
+    </div>
+    <div class="divider"></div>
+    <p class="hint" id="cfgHint">Mientras no conectes una planilla, la app muestra un <b>catálogo de ejemplo</b> con los reportes ya creados.</p>
+  </div>
+</section>
+
+<!-- Administrador -->
+<section class="sheet" id="sheetAdmin" role="dialog" aria-modal="true" aria-labelledby="admTitle">
+  <div class="sheet-head">
+    <h3 id="admTitle">Modo administrador</h3>
+    <button class="x" data-close aria-label="Cerrar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="sheet-body" id="admBody"></div>
+</section>
+
+<div class="toast" id="toast"></div>
+<script>
+'use strict';
+/* ==========================================================================
+   CENTRO DE REPORTES · SCANIA ZONA NORTE
+   PWA de un solo archivo. Catálogo administrable en Google Sheets.
+   ========================================================================== */
+
+var KEY = 'cr_zn_v1';
+var DEFAULT_ADMIN_KEY = 'reportes2026';
+/* Planilla de catálogo ya creada y compartida por enlace. */
+var DEFAULT_SHEET = 'https://docs.google.com/spreadsheets/d/18ZUdzbRwj-myBjeh9IhuS818umF8sUbzhh3uTs_ENsI/edit#gid=1301055616';
+
+/* Catálogo de ejemplo: se usa mientras no haya planilla conectada.          */
+/* "activo" = el administrador decide si el reporte se muestra.              */
+var DEFAULT_CATALOG = [
+  { nombre:'Ranking Nacional de Desorden — OT Chile', descripcion:'Índice 0-100 por sucursal y macrozona, con detalle de OT y plan de acción.',
+    url:'https://drive.google.com/file/d/1bNtmPE3WXOaBTnfY8jW8xd2iMnyiQxP5/view', categoria:'OT', tipo:'pdf',
+    activo:true, orden:1, sucursales:'Todas', actualizado:'08-10-2026' },
+  { nombre:'Dashboard OT y Cierre de Mes — Zona Norte', descripcion:'Cartera de OT por sucursal y asesor, cobertura y ventas por realizar.',
+    url:'https://drive.google.com/file/d/1gmono2fXStcJs4lyw5kgBxn5fpmX1ZLK/view', categoria:'OT', tipo:'pdf',
+    activo:true, orden:2, sucursales:'Zona Norte', actualizado:'24-09-2026' },
+  { nombre:'Ranking de Desorden Operativo — OT Zona Norte', descripcion:'Índice de desorden por sucursal de la Zona Norte.',
+    url:'', categoria:'OT', tipo:'html', activo:false, orden:3, sucursales:'Zona Norte', actualizado:'' },
+  { nombre:'Dashboard Márgenes Retail — COBAT Zona Norte', descripcion:'Márgenes de venta retail por sucursal y asesor.',
+    url:'', categoria:'Ventas', tipo:'html', activo:false, orden:4, sucursales:'Zona Norte', actualizado:'' },
+  { nombre:'Revisión de Integridad — Encuesta NPS Iquique', descripcion:'Control de calidad de la data de la encuesta NPS.',
+    url:'', categoria:'Calidad', tipo:'html', activo:false, orden:5, sucursales:'Iquique', actualizado:'' },
+  { nombre:'Horas Extras Zona Norte', descripcion:'Solicitud y autorización de horas extras de las cinco sucursales.',
+    url:'', categoria:'Personas', tipo:'app', activo:false, orden:6, sucursales:'Zona Norte', actualizado:'' }
+];
+
+var state = {
+  items: [],
+  cfg: { sheet:'', gid:'', backend:'', token:'', adminKey: DEFAULT_ADMIN_KEY },
+  admin: false,
+  clave: '',
+  q:'', cat:'',
+  source:''
+};
+
+/* ----------------------------- utilidades ------------------------------- */
+function $(s){ return document.querySelector(s); }
+function $$(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function norm(s){ return String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+function txt(v){ return v==null ? '' : String(v).trim(); }
+function bool(v){
+  var s = norm(v);
+  return s==='si'||s==='sí'||s==='true'||s==='1'||s==='x'||s==='activo'||s==='yes';
+}
+var _tt;
+function toast(msg, type){
+  var t = $('#toast'); t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(_tt); _tt = setTimeout(function(){ t.className = 'toast'; }, 3200);
+}
+function store(key, val){
+  try{
+    if (arguments.length === 2){ localStorage.setItem(key, JSON.stringify(val)); return; }
+    var raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function nowStamp(){
+  var d = new Date(), p = function(n){ return (n<10?'0':'')+n; };
+  return p(d.getDate())+'-'+p(d.getMonth()+1)+'-'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes());
+}
+function isoDate(s){
+  s = txt(s);
+  var m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return m[3]+'-'+m[2]+'-'+m[1];
+  return s;
+}
+function cacheBust(url){
+  if (!url) return url;
+  return url + (url.indexOf('?')>=0 ? '&' : '?') + 'v=' + Date.now();
+}
+/* Puente cuando la app se sirve desde un Web App de Apps Script. */
+function asReady(){ try{ return !!(window.google && window.google.script && window.google.script.run); }catch(e){ return false; } }
+function asCall(fn, args, ok, err){
+  var r = window.google.script.run.withSuccessHandler(ok).withFailureHandler(function(e){ if (err) err(e); });
+  r[fn].apply(r, args || []);
+}
+/* ------------------------------- config --------------------------------- */
+function loadCfg(){
+  var saved = store(KEY);
+  if (saved && typeof saved === 'object'){
+    state.cfg.sheet = txt(saved.sheet);
+    state.cfg.gid = txt(saved.gid);
+    state.cfg.backend = txt(saved.backend);
+    state.cfg.token = txt(saved.token);
+    state.cfg.adminKey = txt(saved.adminKey) || DEFAULT_ADMIN_KEY;
+  } else {
+    state.cfg.sheet = DEFAULT_SHEET;
+  }
+}
+function saveCfg(){ store(KEY, state.cfg); }
+
+function parseSheetRef(input){
+  input = txt(input);
+  if (!input) return null;
+  var out = { id:'', gid:'' };
+  var m = input.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]{20,})/);
+  if (m) out.id = m[1];
+  else if (/^[a-zA-Z0-9_-]{20,}$/.test(input)) out.id = input;
+  var g = input.match(/[#&?]gid=(\d+)/);
+  if (g) out.gid = g[1];
+  return out.id ? out : null;
+}
+
+/* ------------------------------ JSONP ----------------------------------- */
+function jsonpRaw(url, cbName, onOk, onErr, ms){
+  var s = document.createElement('script');
+  var done = false;
+  var timer = setTimeout(function(){ fail(new Error('Tiempo de espera agotado')); }, ms || 15000);
+  function cleanup(){
+    clearTimeout(timer);
+    try{ delete window[cbName]; }catch(e){ window[cbName] = undefined; }
+    if (s.parentNode) s.parentNode.removeChild(s);
+  }
+  function fail(err){ if (done) return; done = true; cleanup(); if (onErr) onErr(err); }
+  window[cbName] = function(data){ if (done) return; done = true; cleanup(); if (onOk) onOk(data); };
+  s.onerror = function(){ fail(new Error('No se pudo leer la fuente')); };
+  s.src = url;
+  document.head.appendChild(s);
+}
+var _cbSeq = 0;
+function nextCb(){ _cbSeq++; return '__crCb' + _cbSeq + '_' + Date.now().toString(36); }
+
+/* --------------------------- lectura de datos --------------------------- */
+function readGviz(id, gid, ok, err){
+  var cb = nextCb();
+  var url = 'https://docs.google.com/spreadsheets/d/' + id + '/gviz/tq?tqx=responseHandler:' + cb;
+  if (gid) url += '&gid=' + encodeURIComponent(gid);
+  jsonpRaw(url, cb, function(resp){
+    if (!resp || !resp.table){ err && err(new Error('La hoja no devolvió datos')); return; }
+    ok(gvizToItems(resp.table));
+  }, err);
+}
+function readBackend(ok, err){
+  var cb = nextCb();
+  var b = state.cfg.backend;
+  var url = b + (b.indexOf('?')>=0?'&':'?') + 'accion=catalogo&callback=' + cb +
+    '&token=' + encodeURIComponent(state.cfg.token || '');
+  jsonpRaw(url, cb, function(resp){
+    if (!resp || resp.ok === false){ err && err(new Error((resp && resp.error) || 'El servidor respondió con error')); return; }
+    var arr = resp.catalogo || resp.items || resp.reportes || [];
+    ok(rowsToItems(arr));
+  }, err);
+}
+
+/** Convierte la tabla gviz en objetos {encabezado: valor}. */
+function gvizToRows(table){
+  var cols = table.cols || [], rows = table.rows || [];
+  var headers = cols.map(function(c){ return txt(c.label || (c.type==='string'?'':'')); });
+  var hasHeader = headers.some(function(h){ return h !== ''; });
+  var body = rows;
+  if (!hasHeader && rows.length){
+    headers = (rows[0].c || []).map(function(c){ return txt(c && c.v); });
+    body = rows.slice(1);
+    hasHeader = true;
+  }
+  if (!hasHeader) return [];
+  return body.map(function(r){
+    var o = {};
+    (r.c || []).forEach(function(c, i){
+      var h = headers[i]; if (!h) return;
+      var v = c ? (c.f != null && c.f !== '' ? c.f : (c.v != null ? c.v : '')) : '';
+      o[h] = v;
+    });
+    return o;
+  });
+}
+function gvizToItems(table){ return rowsToItems(gvizToRows(table)); }
+
+/** Mapea objetos con encabezados variables a un ítem de catálogo. */
+function pick(obj, keys){
+  var ks = Object.keys(obj);
+  for (var i=0;i<keys.length;i++){
+    for (var j=0;j<ks.length;j++){
+      if (norm(ks[j]).indexOf(keys[i]) >= 0) return obj[ks[j]];
+    }
+  }
+  return '';
+}
+function rowsToItems(rows){
+  var items = [];
+  (rows || []).forEach(function(r){
+    if (!r || typeof r !== 'object') return;
+    var nombre = txt(pick(r,['nombre','reporte','titulo','título']));
+    var url = txt(pick(r,['url','enlace','link','direccion']));
+    if (norm(nombre) === 'nombre') return;
+    if (!nombre && !url) return;
+    var actRaw = pick(r,['activo','mostrar','visible','publicar','habilitado']);
+    var item = {
+      nombre: nombre || url,
+      descripcion: txt(pick(r,['descrip','detalle','resumen'])),
+      url: url,
+      categoria: txt(pick(r,['categ','seccion','sección','grupo'])) || 'General',
+      tipo: norm(pick(r,['tipo','formato'])) || 'html',
+      activo: (actRaw === '' ? true : bool(actRaw)),
+      orden: parseFloat(pick(r,['orden','prioridad','n°'])) || 0,
+      sucursales: txt(pick(r,['sucursal','zona','alcance'])) || 'Todas',
+      actualizado: isoDate(pick(r,['actualiz','corte','fecha','ultima','última']))
+    };
+    items.push(item);
+  });
+  return items.sort(function(a,b){ return (a.orden||0) - (b.orden||0); });
+}
+/* ------------------------------ render ---------------------------------- */
+var ICON_OPEN = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>';
+function iconFor(tipo){
+  var t = norm(tipo);
+  if (t.indexOf('pdf') >= 0) return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg>';
+  if (t.indexOf('app') >= 0) return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
+  if (t.indexOf('sheet') >= 0 || t.indexOf('planilla') >= 0) return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>';
+  return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8"/></svg>';
+}
+function visibleItems(){
+  return state.items.filter(function(it){
+    if (!state.admin && !it.activo) return false;
+    if (state.cat && norm(it.categoria) !== norm(state.cat)) return false;
+    if (state.q){
+      var hay = norm([it.nombre, it.descripcion, it.categoria, it.sucursales, it.tipo].join(' '));
+      if (hay.indexOf(norm(state.q)) < 0) return false;
+    }
+    return true;
+  });
+}
+function render(){
+  var list = visibleItems();
+  var grid = $('#grid'), empty = $('#empty');
+  grid.innerHTML = list.map(function(it){
+    var tagTipo = norm(it.tipo) || 'html';
+    return '<article class="card' + (it.activo ? '' : ' off') + '">' +
+      '<div class="top"><span class="ico">' + iconFor(it.tipo) + '</span>' +
+      '<div style="min-width:0"><h3>' + esc(it.nombre) + '</h3>' +
+      (it.descripcion ? '<p class="desc">' + esc(it.descripcion) + '</p>' : '') + '</div></div>' +
+      '<div class="meta">' +
+        '<span class="tag cat">' + esc(it.categoria) + '</span>' +
+        '<span class="tag ' + tagTipo + '">' + esc(it.tipo) + '</span>' +
+        (it.activo ? '' : '<span class="tag hidden">Oculto</span>') +
+        '<span>' + esc(it.sucursales) + '</span>' +
+      '</div>' +
+      '<div class="foot">' +
+        (it.url
+          ? '<a class="btn-open" href="' + esc(it.url) + '" target="_blank" rel="noopener">' + ICON_OPEN + 'Abrir reporte</a>'
+          : '<span class="btn-open" aria-disabled="true">' + ICON_OPEN + 'Sin enlace</span>') +
+        (it.actualizado ? '<span class="updated">Corte ' + esc(it.actualizado) + '</span>' : '') +
+      '</div></article>';
+  }).join('');
+  empty.classList.toggle('hidden', list.length > 0);
+  $('#gridLabel').textContent = state.admin ? 'Todos los reportes (vista administrador)' : 'Reportes disponibles';
+  renderChips();
+}
+function renderChips(){
+  var cats = [], counts = {};
+  state.items.forEach(function(it){
+    if (!state.admin && !it.activo) return;
+    var c = it.categoria || 'General';
+    if (!counts[c]){ counts[c] = 0; cats.push(c); }
+    counts[c]++;
+  });
+  var html = '<button class="chip' + (state.cat ? '' : ' active') + '" data-cat="">Todos <span class="n">' +
+    (state.admin ? state.items.length : state.items.filter(function(i){return i.activo;}).length) + '</span></button>';
+  html += cats.map(function(c){
+    return '<button class="chip' + (norm(state.cat)===norm(c)?' active':'') + '" data-cat="' + esc(c) + '">' +
+      esc(c) + ' <span class="n">' + counts[c] + '</span></button>';
+  }).join('');
+  $('#chips').innerHTML = html;
+}
+function setStatus(kind, text, corte){
+  var d = $('#stDot');
+  d.className = 'dot' + (kind ? ' ' + kind : '');
+  $('#stText').textContent = text;
+  if (corte !== undefined) $('#stCorte').textContent = corte || '—';
+}
+
+/* ------------------------------ refresh --------------------------------- */
+var _busy = false;
+function refresh(silent){
+  if (_busy) return; _busy = true;
+  var btn = $('#btnRefresh'); btn.classList.add('spin');
+  var done = function(){ _busy = false; btn.classList.remove('spin'); };
+  if (asReady()){
+    setStatus('warn', 'Conectando con el servidor…', '—');
+    asCall('apiCatalogo', [], function(resp){
+      if (!resp || resp.ok === false){
+        setStatus('err', (resp && resp.error) || 'Error del servidor', '—'); done(); return;
+      }
+      var items = rowsToItems(resp.catalogo || []);
+      state.items = items.length ? items : state.items;
+      state.source = 'servidor';
+      setStatus('ok', 'Conectado · ' + state.items.length + ' reportes', 'Actualizado ' + nowStamp());
+      render(); done();
+    }, function(){ setStatus('err', 'Sin conexión con el servidor', '—'); done(); });
+    return;
+  }
+  if (state.cfg.backend){
+    setStatus('warn', 'Conectando al servidor…', '—');
+    readBackend(function(items){
+      state.items = items.length ? items : state.items;
+      state.source = 'servidor'; saveCfg();
+      setStatus('ok', 'Conectado · ' + state.items.length + ' reportes', 'Actualizado ' + nowStamp());
+      render(); done();
+    }, function(e){
+      setStatus('err', 'Sin conexión: ' + e.message, '—');
+      if (!silent) toast('No se pudo leer el servidor: ' + e.message, 'err');
+      done();
+    });
+    return;
+  }
+  var ref = parseSheetRef(state.cfg.sheet);
+  if (ref){
+    setStatus('warn', 'Leyendo la planilla…', '—');
+    readGviz(ref.id, state.cfg.gid || ref.gid, function(items){
+      if (items.length){
+        state.items = items; state.source = 'planilla'; saveCfg();
+        setStatus('ok', 'Planilla conectada · ' + state.items.length + ' reportes', 'Actualizado ' + nowStamp());
+      } else {
+        setStatus('warn', 'La hoja «Catálogo» está vacía', '—');
+      }
+      render(); done();
+    }, function(e){
+      setStatus('err', 'No se pudo leer la planilla', '—');
+      if (!silent) toast('Revisa que la hoja esté compartida «cualquiera con el enlace».', 'err');
+      done();
+    });
+    return;
+  }
+  setStatus('', 'Catálogo de ejemplo · sin planilla conectada', 'Ejemplo');
+  render(); done();
+}
+
+/* --------------------------- admin / escritura -------------------------- */
+function openUrl(u){ if (u) window.open(cacheBust(u), '_blank', 'noopener'); }
+
+function adminLogin(clave){
+  if (asReady()){
+    asCall('apiLogin', [clave], function(r){
+      if (r && r.ok){ state.admin = true; state.clave = clave; renderAdmin(); render(); }
+      else toast((r && r.error) || 'Clave incorrecta', 'err');
+    }, function(){ toast('No se pudo validar con el servidor', 'err'); });
+    return;
+  }
+  if (state.cfg.backend){
+    var cb = nextCb(), b = state.cfg.backend;
+    var url = b + (b.indexOf('?')>=0?'&':'?') + 'accion=login&callback=' + cb +
+      '&clave=' + encodeURIComponent(clave) + '&token=' + encodeURIComponent(state.cfg.token || '');
+    setStatus('warn', 'Validando…', '—');
+    jsonpRaw(url, cb, function(r){
+      if (r && r.ok){ state.admin = true; state.clave = clave; renderAdmin(); render(); setStatus('ok', 'Administrador conectado', 'Actualizado ' + nowStamp()); }
+      else { toast((r && r.error) || 'Clave incorrecta', 'err'); }
+    }, function(){ toast('No se pudo validar con el servidor', 'err'); });
+  } else {
+    if (clave === state.cfg.adminKey){ state.admin = true; state.clave = clave; renderAdmin(); render(); }
+    else toast('Clave incorrecta', 'err');
+  }
+}
+function adminLogout(){ state.admin = false; state.clave = ''; renderAdmin(); render(); }
+function setActivo(nombre, val, item){
+  if (asReady()){
+    asCall('apiSetActivo', [nombre, !!val, state.clave || ''], function(r){
+      if (r && r.ok){ item.activo = val; toast(val?'Reporte visible':'Reporte oculto', 'ok'); renderAdmin(); render(); }
+      else toast((r && r.error) || 'No se pudo guardar', 'err');
+    }, function(){ toast('No se pudo guardar el cambio', 'err'); });
+    return;
+  }
+  if (!state.cfg.backend){
+    toast('Abre la hoja «Catálogo» y cambia la columna Activo.');
+    openCatalogSheet();
+    return;
+  }
+  var cb = nextCb(), b = state.cfg.backend;
+  var url = b + (b.indexOf('?')>=0?'&':'?') + 'accion=setActivo&callback=' + cb +
+    '&nombre=' + encodeURIComponent(nombre) + '&activo=' + (val?'1':'0') +
+    '&clave=' + encodeURIComponent(state.clave || '') +
+    '&token=' + encodeURIComponent(state.cfg.token || '');
+  jsonpRaw(url, cb, function(r){
+    if (r && r.ok){ item.activo = val; toast(val?'Reporte visible':'Reporte oculto', 'ok'); renderAdmin(); render(); }
+    else toast((r && r.error) || 'No se pudo guardar', 'err');
+  }, function(){ toast('No se pudo guardar el cambio', 'err'); });
+}
+function openCatalogSheet(){
+  var ref = parseSheetRef(state.cfg.sheet);
+  if (ref) window.open('https://docs.google.com/spreadsheets/d/' + ref.id + '/edit', '_blank', 'noopener');
+}
+function sheetEditUrl(){
+  var ref = parseSheetRef(state.cfg.sheet);
+  return ref ? 'https://docs.google.com/spreadsheets/d/' + ref.id + '/edit' : '#';
+}
+function renderAdmin(){
+  var body = $('#admBody');
+  if (state.admin){
+    var rows = state.items.slice().sort(function(a,b){ return (a.orden||0)-(b.orden||0); });
+    body.innerHTML =
+      '<p class="hint">Vista de administrador: activa o desactiva los reportes que verá el equipo.' +
+      ((state.cfg.backend || asReady()) ? '' : ' Sin servidor conectado, los cambios se hacen en la hoja <b>Catálogo</b>.') + '</p>' +
+      rows.map(function(it, i){
+        return '<div class="admin-item"><div class="t"><b>' + esc(it.nombre) + '</b>' +
+          '<span>' + esc(it.categoria) + ' · ' + esc(it.sucursales) + (it.url ? '' : ' · sin enlace') + '</span></div>' +
+          '<label class="switch"><input type="checkbox" data-i="' + i + '"' + (it.activo ? ' checked' : '') + '>' +
+          '<span class="track"></span><span class="knob"></span></label></div>';
+      }).join('') +
+      '<div class="btn-row" style="margin-top:16px">' +
+        (state.cfg.sheet ? '<a class="btn ghost" id="admSheet" href="' + esc(sheetEditUrl()) + '" target="_blank" rel="noopener">Abrir hoja Catálogo</a>' : '') +
+        '<button class="btn ghost" id="admOut">Cerrar sesión</button>' +
+      '</div>';
+    var inputs = body.querySelectorAll('input[data-i]');
+    Array.prototype.forEach.call(inputs, function(inp){
+      inp.addEventListener('change', function(){
+        var it = rows[parseInt(inp.getAttribute('data-i'), 10)];
+        setActivo(it.nombre, inp.checked, it);
+      });
+    });
+    if ($('#admSheet')) $('#admSheet').onclick = null;
+    if ($('#admOut')) $('#admOut').onclick = adminLogout;
+  } else {
+    body.innerHTML =
+      '<div class="field"><label for="admKey">Clave de administrador</label>' +
+      '<input id="admKey" type="password" placeholder="Clave" autocomplete="current-password"></div>' +
+      '<button class="btn primary" id="admGo">Entrar como administrador</button>' +
+      '<p class="help" style="margin-top:12px;font-size:11.5px;color:#8A99B0">' +
+      (state.cfg.backend || asReady() ? 'La clave se valida en el servidor.'
+        : 'Sin servidor conectado, la clave es solo un candado de la app (por defecto <b>reportes2026</b>). Los cambios al catálogo se hacen en la hoja.') +
+      '</p>';
+    $('#admGo').onclick = function(){ adminLogin($('#admKey').value); };
+    $('#admKey').addEventListener('keydown', function(e){ if (e.key === 'Enter') adminLogin($('#admKey').value); });
+  }
+}
+
+/* ------------------------- instalación (PWA) ---------------------------- */
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); window.__bip = e; });
+
+/* ------------------------------- init ----------------------------------- */
+function bind(){
+  $('#q').addEventListener('input', function(e){
+    state.q = e.target.value;
+    $('#qClear').classList.toggle('hidden', !state.q);
+    render();
+  });
+  $('#qClear').onclick = function(){ state.q=''; $('#q').value=''; $('#qClear').classList.add('hidden'); render(); };
+  $('#emptyClear').onclick = function(){ state.q=''; state.cat=''; $('#q').value=''; $('#qClear').classList.add('hidden'); render(); };
+  $('#btnRefresh').onclick = function(){ refresh(false); };
+  $('#chips').addEventListener('click', function(e){
+    var c = e.target.closest('.chip');
+    if (c){ state.cat = c.getAttribute('data-cat'); render(); }
+  });
+  $('#btnCfg').onclick = function(){ openSheet('#sheetCfg'); };
+  $('#btnAdmin').onclick = function(){ renderAdmin(); openSheet('#sheetAdmin'); };
+  $('#scrim').onclick = closeSheets;
+  $$('[data-close]').forEach(function(b){ b.onclick = closeSheets; });
+  $('#cfgSave').onclick = function(){
+    state.cfg.sheet = $('#cfgSheet').value;
+    state.cfg.gid = $('#cfgGid').value;
+    state.cfg.backend = $('#cfgBackend').value;
+    state.cfg.token = $('#cfgToken').value;
+    saveCfg(); closeSheets(); toast('Configuración guardada', 'ok'); refresh(false);
+  };
+  $('#cfgTest').onclick = function(){
+    state.cfg.sheet = $('#cfgSheet').value; state.cfg.backend = $('#cfgBackend').value;
+    state.cfg.gid = $('#cfgGid').value; state.cfg.token = $('#cfgToken').value;
+    var ref = parseSheetRef(state.cfg.sheet);
+    if (!ref && !state.cfg.backend){ toast('Pega una planilla o un servidor', 'err'); return; }
+    toast('Probando conexión…');
+    if (state.cfg.backend) readBackend(function(){ toast('Servidor OK', 'ok'); }, function(){ toast('No respondió el servidor', 'err'); });
+    else readGviz(ref.id, state.cfg.gid || ref.gid, function(){ toast('Planilla OK', 'ok'); }, function(){ toast('No se pudo leer la planilla', 'err'); });
+  };
+  $('#cfgReset').onclick = function(){
+    store(KEY, null);
+    state.cfg = { sheet: DEFAULT_SHEET, gid:'', backend:'', token:'', adminKey: DEFAULT_ADMIN_KEY };
+    state.items = DEFAULT_CATALOG.slice(); state.source='ejemplo';
+    fillCfg(); closeSheets(); toast('Configuración restaurada', 'ok'); refresh(false);
+  };
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSheets(); });
+}
+function fillCfg(){
+  $('#cfgSheet').value = state.cfg.sheet || '';
+  $('#cfgGid').value = state.cfg.gid || '';
+  $('#cfgBackend').value = state.cfg.backend || '';
+  $('#cfgToken').value = state.cfg.token || '';
+}
+function openSheet(sel){ closeSheets(); document.body.classList.add('sheeton'); $('#scrim').classList.add('open'); $(sel).classList.add('open'); }
+function closeSheets(){ document.body.classList.remove('sheeton'); $('#scrim').classList.remove('open'); $$('.sheet').forEach(function(s){ s.classList.remove('open'); }); }
+
+function init(){
+  loadCfg(); fillCfg(); bind();
+  state.items = DEFAULT_CATALOG.slice();
+  state.source = 'ejemplo';
+  render();
+  var linked = state.cfg.sheet || state.cfg.backend;
+  if (linked) setStatus('warn', 'Conectando con la planilla…', '—');
+  else setStatus('', 'Catálogo de ejemplo · sin planilla conectada', 'Ejemplo');
+  refresh(true);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+
+</script>
+</body>
+</html>
