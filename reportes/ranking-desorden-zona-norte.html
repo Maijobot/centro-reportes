@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ranking de desorden operativo — Cartera de OT Zona Norte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b2239; --blue:#2e75b6; --blue-l:#9ec6e8; --cyan:#3fa9d6;
+  --amber:#e0a33e; --red:#cf5b52; --green:#3f9d6b; --violet:#7b6cb5;
+  --bg:#eef1f5; --card:#ffffff; --line:#dde4ea; --muted:#697b8c; --ink:#132638;
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 26px 72px}
+.hero{background:var(--navy);color:#fff;padding:32px 0 28px}
+.hero .wrap{padding-bottom:0}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:#7fb4dd;margin:0 0 10px}
+h1{font-size:32px;line-height:1.13;margin:0 0 8px;font-weight:700;letter-spacing:-.015em}
+.hero p.sub{margin:0;color:#a9c3d8;font-size:14.5px;max-width:860px;line-height:1.55}
+.hero .meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:#8fb2cd;
+  font-family:var(--mono)}
+.hero .meta b{color:#fff;font-weight:600}
+section{padding-top:34px}
+.shead{display:flex;align-items:baseline;gap:12px;margin:0 0 14px}
+.shead h2{font-size:17px;margin:0;font-weight:600;letter-spacing:-.01em}
+.shead span{font-size:12.5px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+.lead{font-size:15.5px;line-height:1.6;margin:0 0 6px}
+.lead b{color:var(--navy)}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:1fr 1fr}
+.stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px}
+.stat .v{font-family:var(--mono);font-size:23px;font-weight:700;letter-spacing:-.02em}
+.stat .d{font-size:12px;color:var(--muted);margin-top:6px}
+.stat.red .v{color:var(--red)} .stat.amber .v{color:#9a6a15} .stat.navy .v{color:var(--navy)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:right;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+  font-family:var(--mono);font-weight:500;padding:0 10px 9px;border-bottom:1px solid var(--line);
+  white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+td{padding:9px 10px;border-bottom:1px solid #eef2f5;text-align:right;font-family:var(--mono);
+  font-size:12.5px;white-space:nowrap;vertical-align:middle}
+td.t{font-family:var(--sans);font-size:13px;text-align:left;white-space:normal}
+td.t b{font-weight:600}
+tbody tr:hover td{background:#f7fafc}
+.rank{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;
+  background:var(--navy);color:#fff;font-family:var(--mono);font-size:11px;margin-right:8px}
+.rank.r2{background:#5b6b7a}.rank.r3{background:#8b98a5}
+.pbar{display:inline-block;height:8px;border-radius:4px;vertical-align:middle;min-width:3px}
+.b-blue{background:var(--blue-l)} .b-red{background:var(--red)} .b-amber{background:var(--amber)}
+.b-navy{background:var(--navy)}
+.barcell{width:190px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-family:var(--mono)}
+.p-ok{background:#e6f4ec;color:#2c7a52}.p-warn{background:#fdf1dc;color:#9a6a15}
+.p-bad{background:#fbe9e7;color:#a83b31}.p-neu{background:#eceff3;color:#5b6b7a}
+ul.tight{margin:10px 0 0;padding-left:20px;line-height:1.62;font-size:13.5px}
+ul.tight li{margin-bottom:5px}
+.foot{border-top:1px solid var(--line);margin-top:40px;padding:18px 26px 0;max-width:1180px;
+  margin-left:auto;margin-right:auto;font-size:12px;color:var(--muted);line-height:1.65}
+.tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:10px}
+.note{font-size:12.5px;color:var(--muted);line-height:1.6;margin:12px 0 0}
+@media(max-width:900px){.g3,.g2{grid-template-columns:1fr}.barcell{width:90px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <p class="eyebrow">Scania Zona Norte · Gerencia Regional</p>
+  <h1>Ranking de desorden operativo — cartera de OT</h1>
+  <p class="sub">Dónde se acumula el desorden en la gestión de las órdenes de trabajo: cartera
+     envejecida, OT sin responsable, registros reutilizados y carga desbalanceada, sucursal por
+     sucursal.</p>
+  <div class="meta">
+    <span>Corte <b>24-09-2026</b></span>
+    <span>Universo <b>408 filas · 368 OT · $870.247.255</b></span>
+    <span>Fuente <b>Información general por Orden de Trabajo</b></span>
+  </div>
+</div></header>
+<section><div class="shead"><h2>Lo que muestra el ranking</h2></div>
+<div class="card">
+  <p class="lead">El desorden no está repartido: <b>Coquimbo</b> lo concentra con un índice de
+     <b>99,5/100</b>, muy por sobre Calama (29,4). La causa no es el
+     volumen — Coquimbo maneja 58 OT, menos que Antofagasta o Calama — sino el
+     <b>tiempo sin cerrar</b>: 29% de su cartera lleva más de 30 días y 12%
+     más de 60, contra 2-4% en el resto de la zona.</p>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="stat card red"><div class="k">Cartera atascada (+30 días)</div>
+      <div class="v">$250.608.860</div>
+      <div class="d">61 OT (15% de las OT) · 29% del
+        monto · 18 con +60 d y 7 con +90 d</div></div>
+    <div class="stat card amber"><div class="k">OT sin responsable asignado</div>
+      <div class="v">3</div>
+      <div class="d">sin asesor en el export: nadie responde por ellas</div></div>
+    <div class="stat card navy"><div class="k">Registros reutilizados / inválidos</div>
+      <div class="v">38 + 7</div>
+      <div class="d">OT en más de una fila · 7 OT con chasis inválido</div></div>
+  </div>
+  <p class="note">En simple: la plata no está principalmente "en riesgo por monto", está detenida por
+     tiempo. El 15% de las OT lleva más de 30 días y ahí se concentra el
+     29% del monto de la cartera. De esos $250.608.860 atrapados, más de la mitad
+     ($128.286.902) está en Coquimbo e Iquique.</p>
+</div></section>
+<section><div class="shead"><h2>Cómo se construyó el índice</h2>
+  <span>cuatro señales, normalizadas y ponderadas</span></div>
+<div class="card">
+  <p class="note" style="margin-top:0">Cada señal se normaliza de 0 a 100 comparando las cinco
+     sucursales entre sí (la peor = 100, la mejor = 0) y luego se pondera. Un índice alto significa
+     "aquí el proceso se está demorando más que en el resto de la zona".</p>
+  <table><thead><tr><th>Señal</th><th>Qué mide</th><th>Peso</th></tr></thead><tbody>
+    <tr><td class="t">OT sobre 30 días</td><td class="t">% de la cartera que lleva más de un mes sin cerrarse</td><td>35%</td></tr>
+    <tr><td class="t">OT sobre 60 días</td><td class="t">% con más de dos meses abierta</td><td>25%</td></tr>
+    <tr><td class="t">Días promedio de la cartera</td><td class="t">antigüedad media desde la Fecha Servicio</td><td>20%</td></tr>
+    <tr><td class="t">Monto atrapado</td><td class="t">% del monto de la sucursal que está en OT +30 días</td><td>20%</td></tr>
+  </tbody></table>
+</div></section>
+<section><div class="shead"><h2>Ranking por sucursal</h2>
+  <span>índice de desorden 0-100</span></div>
+<div class="card"><table><thead><tr><th>Sucursal</th><th>Índice</th><th>OT +30 d</th>
+  <th>OT +60 d</th><th>Días prom.</th><th>Monto +30 d</th><th>% monto atrapado</th>
+  <th>OT</th><th>Cartera</th></tr></thead><tbody><tr><td class="t"><span class="rank">1</span><b>Coquimbo</b></td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">99,5</span> <span class="pbar b-red" style="width:80%"></span></td><td>29%</td><td>12%</td><td>30,9</td><td>$65.205.470</td><td>39%</td><td>58</td><td>$168.404.957</td></tr><tr><td class="t"><span class="rank r2">2</span><b>Calama</b></td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">29,4</span> <span class="pbar b-red" style="width:24%"></span></td><td>15%</td><td>4%</td><td>19,0</td><td>$37.238.197</td><td>29%</td><td>111</td><td>$128.409.944</td></tr><tr><td class="t"><span class="rank r3">3</span><b>Iquique</b></td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">20,0</span> <span class="pbar b-red" style="width:16%"></span></td><td>7%</td><td>2%</td><td>16,3</td><td>$63.081.432</td><td>39%</td><td>87</td><td>$161.023.735</td></tr><tr><td class="t"><span class="rank r3">4</span><b>Copiapó</b></td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">18,9</span> <span class="pbar b-red" style="width:15%"></span></td><td>15%</td><td>3%</td><td>18,4</td><td>$24.593.145</td><td>22%</td><td>67</td><td>$112.528.148</td></tr><tr><td class="t"><span class="rank r3">5</span><b>Antofagasta</b></td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">15,3</span> <span class="pbar b-red" style="width:12%"></span></td><td>13%</td><td>4%</td><td>18,3</td><td>$60.490.616</td><td>20%</td><td>85</td><td>$299.880.471</td></tr></tbody></table>
+  <p class="note">Coquimbo se despega porque combina las cuatro señales en el peor nivel. Iquique y
+     Calama tienen % de monto atrapado parecido (39% y 29%), pero con OT mucho más nuevas: el problema
+     ahí es monto, no tiempo.</p>
+</div></section>
+<section><div class="shead"><h2>Ranking por asesor</h2>
+  <span>asesores con 5 OT o más · ordenado por días promedio</span></div>
+<div class="card"><table><thead><tr><th>Asesor</th><th>Sucursal</th><th>OT</th>
+  <th>Días prom.</th><th>OT +30 d</th><th>Monto +30 d</th><th>% monto atrapado</th>
+  <th>Cartera</th></tr></thead><tbody><tr><td class="t"><span class="rank">1</span><b>ARS - Ariel Alfaro Sandoval</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Copiapó</td><td>7</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">47,4 d</span> <span class="pbar b-red" style="width:80%"></span></td><td>29%</td><td>$2.716.709</td><td>19%</td><td>$13.987.526</td></tr><tr><td class="t"><span class="rank r2">2</span><b>PROWC - Patricio Romero Muñoz</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Calama</td><td>6</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">41,8 d</span> <span class="pbar b-red" style="width:71%"></span></td><td>50%</td><td>$5.612.333</td><td>47%</td><td>$11.963.714</td></tr><tr><td class="t"><span class="rank r3">3</span><b>VSAGV - Viviana Saez Ureta</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Coquimbo</td><td>35</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">37,7 d</span> <span class="pbar b-red" style="width:64%"></span></td><td>34%</td><td>$58.005.228</td><td>57%</td><td>$102.473.674</td></tr><tr><td class="t"><span class="rank r3">4</span><b>FPUTK - Francisco Puente Ramirez</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Antofagasta</td><td>14</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">30,0 d</span> <span class="pbar b-red" style="width:51%"></span></td><td>36%</td><td>$31.681.474</td><td>29%</td><td>$109.848.062</td></tr><tr><td class="t"><span class="rank r3">5</span><b>MGA20 - Maximiliano Loayza Smith</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Antofagasta</td><td>6</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">29,8 d</span> <span class="pbar b-red" style="width:50%"></span></td><td>33%</td><td>$23.430.058</td><td>88%</td><td>$26.726.128</td></tr><tr><td class="t"><span class="rank r3">6</span><b>CCE - Carlos Ceballos Muñoz</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Antofagasta</td><td>5</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">21,4 d</span> <span class="pbar b-red" style="width:36%"></span></td><td>0%</td><td>$0</td><td>0%</td><td>$1.822.000</td></tr><tr><td class="t"><span class="rank r3">7</span><b>GAG5I - Gilian Aguillon Ziaballe</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Coquimbo</td><td>23</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">20,7 d</span> <span class="pbar b-red" style="width:35%"></span></td><td>22%</td><td>$7.200.242</td><td>11%</td><td>$65.931.283</td></tr><tr><td class="t"><span class="rank r3">8</span><b>SSAF5 - Solange Salas</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Calama</td><td>41</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">20,3 d</span> <span class="pbar b-red" style="width:34%"></span></td><td>22%</td><td>$10.060.695</td><td>35%</td><td>$29.136.058</td></tr><tr><td class="t"><span class="rank r3">9</span><b>PSISA - Pedro Silva Ovando</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Iquique</td><td>28</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">19,1 d</span> <span class="pbar b-red" style="width:32%"></span></td><td>21%</td><td>$63.081.432</td><td>62%</td><td>$102.401.133</td></tr><tr><td class="t"><span class="rank r3">10</span><b>RDOJO - Ritchie Dorador Roman</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Calama</td><td>12</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">18,5 d</span> <span class="pbar b-red" style="width:31%"></span></td><td>8%</td><td>$8.754.223</td><td>59%</td><td>$14.859.949</td></tr><tr><td class="t"><span class="rank r3">11</span><b>FCOUX - Felipe Cornejo Gonzalez</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Iquique</td><td>34</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">17,4 d</span> <span class="pbar b-red" style="width:29%"></span></td><td>0%</td><td>$0</td><td>0%</td><td>$27.464.635</td></tr><tr><td class="t"><span class="rank r3">12</span><b>VVIX5 - Veronica Vildoso Ochoa</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Calama</td><td>37</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">17,3 d</span> <span class="pbar b-red" style="width:29%"></span></td><td>8%</td><td>$12.593.889</td><td>20%</td><td>$64.297.733</td></tr><tr><td class="t"><span class="rank r3">13</span><b>SVIXT - Sergio Vicencio Lopez</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Copiapó</td><td>17</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">17,0 d</span> <span class="pbar b-red" style="width:29%"></span></td><td>24%</td><td>$8.655.333</td><td>31%</td><td>$28.000.185</td></tr><tr><td class="t"><span class="rank r3">14</span><b>CIT18 - Claudio Tapia Godoy</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Antofagasta</td><td>32</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">16,3 d</span> <span class="pbar b-red" style="width:28%"></span></td><td>6%</td><td>$3.482.856</td><td>4%</td><td>$89.399.957</td></tr><tr><td class="t"><span class="rank r3">15</span><b>PDI7J - Pamela Diaz Ramirez</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Copiapó</td><td>14</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">14,0 d</span> <span class="pbar b-red" style="width:24%"></span></td><td>21%</td><td>$10.315.989</td><td>40%</td><td>$25.537.503</td></tr><tr><td class="t"><span class="rank r3">16</span><b>RRV - Rafael Rivera Veliz</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Copiapó</td><td>22</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">13,5 d</span> <span class="pbar b-red" style="width:23%"></span></td><td>0%</td><td>$0</td><td>0%</td><td>$26.546.996</td></tr><tr><td class="t"><span class="rank r3">17</span><b>DPEEQ - Daunys Penso Rodriguez</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Iquique</td><td>18</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">12,9 d</span> <span class="pbar b-red" style="width:22%"></span></td><td>0%</td><td>$0</td><td>0%</td><td>$26.443.881</td></tr><tr><td class="t"><span class="rank r3">18</span><b>RBA20 - Rodrigo Barrientos Rivera</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Antofagasta</td><td>7</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">11,6 d</span> <span class="pbar b-red" style="width:20%"></span></td><td>14%</td><td>$1.016.125</td><td>37%</td><td>$2.743.060</td></tr><tr><td class="t"><span class="rank r3">19</span><b>SMAPI - Digital Dealer</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Calama</td><td>12</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">9,2 d</span> <span class="pbar b-red" style="width:16%"></span></td><td>0%</td><td>$0</td><td>0%</td><td>$4.643.319</td></tr><tr><td class="t"><span class="rank r3">20</span><b>HVI3C - Helen Vizcarra Aramayo</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Antofagasta</td><td>13</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">8,3 d</span> <span class="pbar b-red" style="width:14%"></span></td><td>0%</td><td>$0</td><td>0%</td><td>$53.423.016</td></tr><tr><td class="t"><span class="rank r3">21</span><b>LCO19 - Luis Covarrubias Barraza</b></td><td class="t" style="font-size:11.5px;color:var(--muted)">Iquique</td><td>7</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">8,3 d</span> <span class="pbar b-red" style="width:14%"></span></td><td>0%</td><td>$0</td><td>0%</td><td>$4.714.087</td></tr></tbody></table>
+  <p class="note">El foco no es solo quién tiene la cartera más vieja en promedio, sino quién
+     concentra plata detenida: <b>PSISA - Pedro Silva Ovando</b> tiene $63.081.432 en OT de más de
+     30 días (62% de su cartera), y <b>MGA20 - Maximiliano Loayza Smith</b> es el más expuesto
+     en proporción: 88% de su cartera está atascada.</p>
+</div></section>
+<section><div class="shead"><h2>Focos rojos</h2>
+  <span>las OT que no debieran seguir abiertas</span></div>
+<div class="card" style="margin-bottom:14px">
+  <span class="tag">OT más antiguas de la zona</span>
+  <table><thead><tr><th>N° OT</th><th>Sucursal</th><th>Asesor</th><th>Cliente</th><th>Días</th>
+    <th>Monto</th></tr></thead><tbody><tr><td>10827</td><td class="t">Coquimbo</td><td class="t" style="font-size:11.5px;color:var(--muted)">VSAGV - Viviana Saez Ureta</td><td class="t">TRANSPORTES MUÑOZ SPA -76531175</td><td><span class="pill p-bad">186 d</span></td><td>$1.098.976</td></tr><tr><td>10860</td><td class="t">Coquimbo</td><td class="t" style="font-size:11.5px;color:var(--muted)">VSAGV - Viviana Saez Ureta</td><td class="t">MAQUINARIAS DEL SUR  DON CARLOS SPA -7676…</td><td><span class="pill p-bad">179 d</span></td><td>$5.984.820</td></tr><tr><td>11060</td><td class="t">Coquimbo</td><td class="t" style="font-size:11.5px;color:var(--muted)">VSAGV - Viviana Saez Ureta</td><td class="t">TRANSPORTES MUÑOZ SPA -76531175</td><td><span class="pill p-bad">137 d</span></td><td>$1.835.289</td></tr><tr><td>53000050</td><td class="t">Copiapó</td><td class="t" style="font-size:11.5px;color:var(--muted)">ARS - Ariel Alfaro Sandoval</td><td class="t">SANTIAGO METALS LIMITADA -76255134</td><td><span class="pill p-bad">114 d</span></td><td>$2.616.049</td></tr><tr><td>53000065</td><td class="t">Copiapó</td><td class="t" style="font-size:11.5px;color:var(--muted)">ARS - Ariel Alfaro Sandoval</td><td class="t">ATACAMA MINERALES DOS SPA -76296369</td><td><span class="pill p-bad">103 d</span></td><td>$100.660</td></tr><tr><td>11284</td><td class="t">Coquimbo</td><td class="t" style="font-size:11.5px;color:var(--muted)">VSAGV - Viviana Saez Ureta</td><td class="t">TRAILER LOGISTICS SPA -76746317</td><td><span class="pill p-bad">98 d</span></td><td>$14.726.787</td></tr><tr><td>11365</td><td class="t">Coquimbo</td><td class="t" style="font-size:11.5px;color:var(--muted)">VSAGV - Viviana Saez Ureta</td><td class="t">ATACAMA MINERALES DOS SPA -76296369</td><td><span class="pill p-warn">79 d</span></td><td>$3.592.526</td></tr><tr><td>11372</td><td class="t">Coquimbo</td><td class="t" style="font-size:11.5px;color:var(--muted)">VSAGV - Viviana Saez Ureta</td><td class="t">TRANSPORTES PEDRO VILLALOBOS LAZO E.I.R.L…</td><td><span class="pill p-warn">79 d</span></td><td>$1.278.063</td></tr><tr><td>32119</td><td class="t">Antofagasta</td><td class="t" style="font-size:11.5px;color:var(--muted)">FPUTK - Francisco Puente Ramirez</td><td class="t">EMPRESA DE TRANSPORTES RURALES SPA -80314…</td><td><span class="pill p-warn">78 d</span></td><td>$18.509.777</td></tr><tr><td>11297</td><td class="t">Iquique</td><td class="t" style="font-size:11.5px;color:var(--muted)">PSISA - Pedro Silva Ovando</td><td class="t">LOGISTICA HUALPEN LIMITADA -76750560</td><td><span class="pill p-warn">77 d</span></td><td>$8.847.968</td></tr><tr><td>11307</td><td class="t">Iquique</td><td class="t" style="font-size:11.5px;color:var(--muted)">PSISA - Pedro Silva Ovando</td><td class="t">SOCIEDAD DE TRANSPORTES OXA LIMITADA -760…</td><td><span class="pill p-warn">74 d</span></td><td>$2.638.165</td></tr><tr><td>16099</td><td class="t">Calama</td><td class="t" style="font-size:11.5px;color:var(--muted)">SSAF5 - Solange Salas</td><td class="t">PILAY SPA -77721870</td><td><span class="pill p-warn">65 d</span></td><td>$3.477.186</td></tr></tbody></table>
+  <p class="note">Las tres más antiguas (186 d, 179 d y
+     137 d) son de <b>Coquimbo</b> y de la misma asesora, lo que apunta a un cuello
+     de botella puntual más que a un problema de toda la sucursal.</p>
+</div>
+<div class="grid g2">
+  <div class="card"><span class="tag">Sin responsable asignado (3)</span>
+    <ul class="tight"><li>OT <b>16440</b> — Calama, 2 días, $3.292.114 · METSO INDUSTRIAL SERVICES SPA -77276280</li><li>OT <b>53000164</b> — Copiapó, 2 días, $1.531.677 · ATACAMA MINERALS CHILE S C M -78338570</li><li>OT <b>16217</b> — Calama, 36 días, $217.058 · LOGISTICA HUALPEN LIMITADA -76750560</li></ul>
+    <p class="note">Una OT sin asesor no tiene dueño de la gestión: nadie la está empujando a cierre.</p>
+  </div>
+  <div class="card"><span class="tag">Calidad de registro</span>
+    <ul class="tight">
+      <li><b>7 OT con chasis inválido</b> ("00001" o "000000") — el maestro de
+          equipos no se está completando (CALAMA / SERVICIO -40024; COPIAPO / SERVICIOS -40030).</li>
+      <li><b>38 OT aparecen en más de una fila</b> (408 filas para 368 OT
+          únicas): el export trae una fila por línea, y eso infla el conteo si no se depura.</li>
+      <li><b>23 equipos tienen más de una OT abierta distinta</b> a la vez. Los más repetidos:
+          <b>4117234</b> (3 OT) · <b>3952294</b> (3 OT) · <b>4029315</b> (3 OT) · <b>4114582</b> (3 OT) · <b>4017330</b> (2 OT). Señal de reapertura o de que no se cierra la OT anterior.</li>
+    </ul>
+  </div>
+</div></section>
+<section><div class="shead"><h2>Clientes y grupos donde se estanca la cartera</h2></div>
+<div class="grid g2">
+  <div class="card"><span class="tag">Clientes con la cartera más vieja (3 OT o más)</span>
+    <table><thead><tr><th>Cliente</th><th>OT</th><th>Días prom.</th><th>+30 d</th><th>Cartera</th>
+      <th>Monto +30 d</th></tr></thead><tbody><tr><td class="t"><b>TRANSPORTES MUÑOZ SPA -76531175</b></td><td>3</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">120 d</span> <span class="pbar b-amber" style="width:80%"></span></td><td>3</td><td>$3.969.938</td><td>$3.969.938</td></tr><tr><td class="t"><b>ATACAMA MINERALES DOS SPA -76296369</b></td><td>4</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">55 d</span> <span class="pbar b-amber" style="width:37%"></span></td><td>2</td><td>$5.896.691</td><td>$3.693.187</td></tr><tr><td class="t"><b>EMPRESA DE TRANSPORTES RURALES SPA -803…</b></td><td>5</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">55 d</span> <span class="pbar b-amber" style="width:36%"></span></td><td>3</td><td>$36.042.110</td><td>$18.509.777</td></tr><tr><td class="t"><b>MAQUINARIAS DEL SUR  DON CARLOS SPA -76…</b></td><td>6</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">53 d</span> <span class="pbar b-amber" style="width:35%"></span></td><td>3</td><td>$19.482.672</td><td>$16.410.555</td></tr><tr><td class="t"><b>SOCIEDAD COMERCIAL Y TRANSPORTES BENJAM…</b></td><td>3</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">43 d</span> <span class="pbar b-amber" style="width:29%"></span></td><td>3</td><td>$3.386.713</td><td>$3.386.713</td></tr><tr><td class="t"><b>SANTIAGO METALS LIMITADA -76255134</b></td><td>7</td><td class="t barcell"><span style="font-size:11px;color:var(--muted)">34 d</span> <span class="pbar b-amber" style="width:23%"></span></td><td>1</td><td>$6.817.041</td><td>$2.616.049</td></tr></tbody></table></div>
+  <div class="card"><span class="tag">Por grupo de cliente</span>
+    <table><thead><tr><th>Grupo</th><th>OT</th><th>Días prom.</th><th>+30 d</th><th></th>
+      <th>Cartera</th></tr></thead><tbody><tr><td class="t"><b>Scania Assistance</b></td><td>21</td><td>28,5</td><td>24%</td><td class="t barcell"><span class="pbar b-blue" style="width:100%"></span></td><td>$35.392.978</td></tr><tr><td class="t"><b>Garantías</b></td><td>21</td><td>20,2</td><td>14%</td><td class="t barcell"><span class="pbar b-blue" style="width:71%"></span></td><td>$41.556.423</td></tr><tr><td class="t"><b>Clientes</b></td><td>358</td><td>19,4</td><td>14%</td><td class="t barcell"><span class="pbar b-blue" style="width:68%"></span></td><td>$767.503.698</td></tr><tr><td class="t"><b>Siniestros</b></td><td>8</td><td>18,9</td><td>25%</td><td class="t barcell"><span class="pbar b-blue" style="width:66%"></span></td><td>$25.794.156</td></tr></tbody></table>
+    <p class="note">Los grupos <b>Scania Assistance</b> y <b>Garantías</b> tardan más en
+       cerrarse (28,5 y 20,2 días promedio), por encima de la
+       cartera de clientes (19,4 d).</p></div>
+</div></section>
+<section><div class="shead"><h2>Lectura de procesos</h2>
+  <span>qué sugiere cada señal</span></div>
+<div class="card">
+  <ul class="tight">
+    <li><b>El cuello está en el cierre, no en la ejecución.</b> Los días se cuentan desde la Fecha
+        Servicio —el vehículo ya se atendió—, así que una OT vieja es facturación o cierre
+        pendiente. 61 OT con +30 días y 18 con +60 apuntan a un proceso de
+        cierre sin fecha de compromiso ni responsable de empujarlo.</li>
+    <li><b>El desorden se concentra en Coquimbo.</b> Índice 99,5 versus
+        29,4 del segundo: 29% de su cartera sobre 30 días y 12%
+        sobre 60. No es volumen —es la sucursal con menos OT—, es demora.</li>
+    <li><b>Hay OT sin dueño.</b> 3 OT sin asesor asignado: sin responsable no hay
+        gestión. Es el fallo de proceso más barato de corregir.</li>
+    <li><b>El registro de datos es débil.</b> 7 OT con chasis inválido y
+        38 OT repartidas en varias filas indican que el maestro de equipos y el registro de
+        OT no se están cuidando; eso ensucia cualquier indicador que se construya encima.</li>
+    <li><b>Reincidencia por vehículo.</b> 23 equipos con más de una OT abierta
+        simultánea: o se reabre sin cerrar la anterior, o se está trabajando sin cerrar lo previo.</li>
+  </ul>
+</div></section>
+<section><div class="shead"><h2>Qué haría con esto</h2></div>
+<div class="card">
+  <ul class="tight">
+    <li><b>Coquimbo primero, con nombre y fecha.</b> Revisión semanal de las OT sobre 30 días de
+        Coquimbo con la asesora a cargo y fecha compromiso de cierre; es donde el índice se dispara.</li>
+    <li><b>Regla de "sin dueño, no avanza".</b> Asignar responsable a las 3 OT sin
+        asesor y bloquear en el sistema la apertura/continuidad sin asesor asignado.</li>
+    <li><b>Tablero de +30 días transversal.</b> Bajar el mismo corte a las cinco sucursales
+        ($250.608.860 atrapados hoy) y usarlo como meta mensual; Iquique y Calama entran por monto,
+        Coquimbo por tiempo.</li>
+    <li><b>Depurar el maestro.</b> Exigir chasis válido y separar "línea de OT" de "OT" en el
+        reporte —contar por N° OT único, no por fila— para que los números no se inflen.</li>
+    <li><b>Entender la reincidencia.</b> Tomar los 5 equipos con más OT abiertas y
+        ver si son reaperturas o trabajos nuevos; define si el problema es de proceso o de registro.</li>
+  </ul>
+</div></section>
+<footer class="foot"><b>Base.</b> Información general por Orden de Trabajo al 24-09-2026 (408 filas, 368 OT únicas, $870.247.255). Los días se cuentan desde la Fecha Servicio de cada OT. El grupo de cliente se deriva del campo Tipo del export.</footer>
+</body>
+</html>

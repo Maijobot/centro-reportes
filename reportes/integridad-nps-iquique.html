@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisión de integridad — Data encuesta NPS Scania Iquique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b2239; --blue:#2e75b6; --blue-l:#9ec6e8; --cyan:#3fa9d6;
+  --amber:#e0a33e; --red:#cf5b52; --green:#3f9d6b; --violet:#7b6cb5;
+  --bg:#eef1f5; --card:#ffffff; --line:#dde4ea; --muted:#697b8c; --ink:#132638;
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 26px 72px}
+.hero{background:var(--navy);color:#fff;padding:32px 0 28px}
+.hero .wrap{padding-bottom:0}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:#7fb4dd;margin:0 0 10px}
+h1{font-size:32px;line-height:1.13;margin:0 0 8px;font-weight:700;letter-spacing:-.015em}
+.hero p.sub{margin:0;color:#a9c3d8;font-size:14.5px;max-width:880px;line-height:1.55}
+.hero .meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:#8fb2cd;
+  font-family:var(--mono)}
+.hero .meta b{color:#fff;font-weight:600}
+section{padding-top:34px}
+.shead{display:flex;align-items:baseline;gap:12px;margin:0 0 14px}
+.shead h2{font-size:17px;margin:0;font-weight:600;letter-spacing:-.01em}
+.shead span{font-size:12.5px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+.lead{font-size:15.5px;line-height:1.6;margin:0 0 6px}
+.lead b{color:var(--navy)}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:1fr 1fr}
+.stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px}
+.stat .v{font-family:var(--mono);font-size:23px;font-weight:700;letter-spacing:-.02em}
+.stat .d{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+.stat.red .v{color:var(--red)} .stat.amber .v{color:#9a6a15} .stat.navy .v{color:var(--navy)}
+.stat.green .v{color:var(--green)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:right;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+  font-family:var(--mono);font-weight:500;padding:0 10px 9px;border-bottom:1px solid var(--line);
+  white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+td{padding:9px 10px;border-bottom:1px solid #eef2f5;text-align:right;font-family:var(--mono);
+  font-size:12.5px;white-space:nowrap;vertical-align:middle}
+td.t{font-family:var(--sans);font-size:13px;text-align:left;white-space:normal}
+td.t b{font-weight:600}
+tbody tr:hover td{background:#f7fafc}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-family:var(--mono)}
+.p-ok{background:#e6f4ec;color:#2c7a52}.p-warn{background:#fdf1dc;color:#9a6a15}
+.p-bad{background:#fbe9e7;color:#a83b31}.p-neu{background:#eceff3;color:#5b6b7a}
+ul.tight{margin:10px 0 0;padding-left:20px;line-height:1.62;font-size:13.5px}
+ul.tight li{margin-bottom:8px}
+ul.tight li b{color:var(--navy)}
+.foot{border-top:1px solid var(--line);margin-top:40px;padding:18px 26px 0;max-width:1180px;
+  margin-left:auto;margin-right:auto;font-size:12px;color:var(--muted);line-height:1.65}
+.tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:10px}
+.note{font-size:12.5px;color:var(--muted);line-height:1.6;margin:12px 0 0}
+.mono{font-family:var(--mono)}
+.scroll{overflow-x:auto}
+@media(max-width:900px){.g3,.g2{grid-template-columns:1fr}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Revisión de integridad de datos · Segundo cerebro</p>
+    <h1>¿Números repetidos o indicios de fraude en la data?</h1>
+    <p class="sub">Análisis del archivo <b>1837_Scania Iquique.ppt</b> (encuesta NPS de taller, proveedor Dapresy). Se transcribió y comparó toda la data visible en las 2 tablas de pantallazos y en el listado de respuestas del deck.</p>
+    <div class="meta">
+      <span>Fuente <b>1837_Scania Iquique.ppt</b></span>
+      <span>Sucursal <b>Scania Iquique</b></span>
+      <span>Periodo visible <b>04–23 sep 2026</b></span>
+      <span>Registros <b>20 (14 con nota · 6 pendientes)</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- S1 VEREDICTO -->
+  <section id="veredicto">
+    <div class="shead"><h2>Veredicto</h2><span>resumen en 30 segundos</span></div>
+    <div class="card">
+      <p class="lead" id="lead"><b>No hay números de identificación repetidos</b> — los 20 «Respondent ID» visibles son únicos y las repeticiones entre tablas son el mismo registro mostrado dos veces. Pero <b>sí hay señales que ameritan verificación</b>: el 100% de las notas son top-box (Satisfacción 5 y Recomendar 9–10), 3 de cada 10 respuestas con nota no tienen cliente identificable, y el archivo viene de una <b>plantilla demo del proveedor</b> (Dapresy). No hay fraude comprobado, pero tampoco se puede descartar con esta muestra.</p>
+    </div>
+    <div class="grid g3" style="margin-top:14px" id="kpis">
+      <div class="card stat green"><div class="k">Respondent ID duplicados</div><div class="v">0 de 20</div><div class="d">Ningún ID se repite con datos distintos. Los que aparecen en dos tablas son el mismo registro.</div></div>
+      <div class="card stat red"><div class="k">Notas top-box</div><div class="v">100%</div><div class="d">Satisfacción = 5 en los 10 registros con nota; Recomendar 9 o 10 en todos.</div></div>
+      <div class="card stat amber"><div class="k">Respuestas sin identidad</div><div class="v">3 de 10</div><div class="d">Con nota, pero sin nombre, teléfono, patente ni compañía: no se pueden auditar.</div></div>
+    </div>
+  </section>
+
+  <!-- S2 DUPLICADOS -->
+  <section id="repetidos">
+    <div class="shead"><h2>Números repetidos detectados</h2><span>qué se repite y cómo se lee</span></div>
+    <div class="card scroll" id="tabla-repetidos">
+      <table>
+        <thead><tr><th>Tipo</th><th>Valor repetido</th><th>Registros (Respondent ID)</th><th style="text-align:left">Lectura</th></tr></thead>
+        <tbody>
+          <tr><td class="t"><b>Teléfono</b></td><td>56993134479</td><td>…5654253 · …5657984</td><td class="t">Mismo contacto (<b>CAMILO</b> / R&amp;M Contracts) en <b>dos vehículos</b> distintos (SRTF99 y RXDY58). El primero ya respondió; el segundo sigue pendiente.</td></tr>
+          <tr><td class="t"><b>Patentes correlativas</b></td><td>KKPX42 · KKPX43</td><td>…5657977 · …5657983</td><td class="t">Ambas de <b>AVANT INDUSTRIAL SPA</b>, misma visita (22-09): dos camiones nuevos de la misma flota.</td></tr>
+          <tr><td class="t"><b>N° interno / chasis</b></td><td>4116978 · 4116958</td><td>…5655726 · …5657982</td><td class="t">Cifras casi idénticas, ambas «GARANTIA FABRICA CAMIONES». <b>Verificar que no sea el mismo equipo.</b></td></tr>
+          <tr><td class="t"><b>Compañía</b></td><td>R&amp;M Contracts (4) · GARANTIA FÁBRICA (4)</td><td>292 · 152 · 253 · 984 / 726 · 156 · 979 · 982</td><td class="t">Dos compañías concentran <b>8 de los 16</b> registros con empresa cargada. AVANT suma 2 más.</td></tr>
+          <tr><td class="t"><b>Bloque de ID</b></td><td>…5657977 → …5657984</td><td>23-09 (8 seguidos)</td><td class="t">Numeración automática del día: 8 invitaciones correlativas, <b>normal</b>. Solo 2 respondieron.</td></tr>
+          <tr><td class="t"><b>Nombre sin apellido</b></td><td>CAMILO</td><td>…5654253 · …5657984</td><td class="t">Mismo nombre corto y mismo teléfono: un solo contacto operando varios camiones.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" id="nota-repetidos">Ningún <b>Respondent ID</b> se repite dentro de una tabla ni entre tablas con datos distintos: las coincidencias 977, 981, 544 y 292 son el <b>mismo registro mostrado en las dos vistas</b>, no duplicados.</p>
+  </section>
+
+  <!-- S3 ALERTAS -->
+  <section id="alertas">
+    <div class="shead"><h2>Señales de alerta (integridad / posible fraude)</h2><span>de mayor a menor peso</span></div>
+    <div class="card"><ul class="tight" id="lista-alertas">
+      <li><b>100% top-box — la bandera roja principal.</b> Las 10 respuestas con nota dan <span class="mono">Satisfacción = 5/5</span> y <span class="mono">Recomendar = 9 o 10</span> → NPS efectivo <b>+100</b>. En servicio real es un resultado atípico y es el patrón típico de encuestas auto-completadas o intervenidas.</li>
+      <li><b>Registros con nota pero sin identidad (3 de 10).</b> <span class="mono">2609185656544</span> (10/5 + comentario), <span class="mono">2609175656150</span> (10/5, sin comentario) y <span class="mono">2609095653474</span> (9/5, sin comentario) no traen nombre, teléfono, compañía ni patente. <b>No son auditables</b>: no se puede saber quién respondió.</li>
+      <li><b>Fechas parciales justo en esos 3 registros.</b> Sus columnas «Service date» y «Fecha de entrevista» muestran solo <span class="mono">2026-09</span> (sin día), mientras el resto trae la fecha completa. Coincide exactamente con los registros incompletos: parecen cargados a mano.</li>
+      <li><b>Origen del archivo: plantilla demo del proveedor.</b> Internamente el .ppt se llama <b>«Customer Data Demo»</b>, con autor <b>«Aldin Mahm»</b> y fecha de creación <b>28-01-2019</b> (PowerPoint para Mac); última edición 25-09-2026. La diapositiva 1 dice «1 | Workshop NPS — Customer Data Demo». Hay que confirmar si la data es real de Iquique o un set de demostración reutilizado.</li>
+      <li><b>Muestra chica.</b> Solo 14 respuestas y 6 invitaciones pendientes visibles, repartidas en 3 semanas. Con ese volumen, un 100% top-box no es representativo ni concluyente.</li>
+    </ul></div>
+  </section>
+
+  <!-- S4 DATOS -->
+  <section id="datos">
+    <div class="shead"><h2>Data extraída</h2><span>20 registros visibles, tal como aparecen</span></div>
+    <div class="card scroll" id="tabla-datos">
+      <table>
+        <thead><tr><th>Respondent ID</th><th>Fecha visita</th><th>Matrícula</th><th style="text-align:left">Cliente</th><th>Teléfono</th><th style="text-align:left">Compañía</th><th>Reco.</th><th>Sat.</th><th style="text-align:left">Estado</th></tr></thead>
+        <tbody>
+          <tr><td>2609235657977</td><td>2026-09-22</td><td>KKPX42</td><td class="t">JAVIERA ARREDONDO</td><td>56956829690</td><td class="t">AVANT INDUSTRIAL SPA</td><td>9</td><td>5</td><td class="t"><span class="pill p-bad">top-box</span></td></tr>
+          <tr><td>2609235657981</td><td>2026-09-22</td><td>5357953</td><td class="t">EMILIO ALVARADO</td><td>56995505641</td><td class="t">ALVARADO FLORES EMILIO SEGUNDO</td><td>10</td><td>5</td><td class="t"><span class="pill p-bad">top-box</span></td></tr>
+          <tr><td>2609185656544</td><td>2026-09-17</td><td>(vacío)</td><td class="t">(vacío)</td><td>(vacío)</td><td class="t">(vacío)</td><td>10</td><td>5</td><td class="t"><span class="pill p-warn">sin identidad</span></td></tr>
+          <tr><td>2609175655292</td><td>2026-09-14</td><td>TZWR38</td><td class="t">ROBERTO MUHLENBROCK</td><td>56945925881</td><td class="t">R&amp;M Contracts</td><td>10</td><td>5</td><td class="t"><span class="pill p-bad">top-box</span></td></tr>
+          <tr><td>2609175655726</td><td>2026-09-15</td><td>4116978</td><td class="t">ANDRES CORVACHO</td><td>56940619118</td><td class="t">GARANTIA FABRICA CAMIONES</td><td>10</td><td>5</td><td class="t"><span class="pill p-bad">top-box</span></td></tr>
+          <tr><td>2609175656150</td><td>2026-09-16</td><td>(vacío)</td><td class="t">(vacío)</td><td>(vacío)</td><td class="t">(vacío)</td><td>10</td><td>5</td><td class="t"><span class="pill p-warn">sin identidad</span></td></tr>
+          <tr><td>2609175656152</td><td>2026-09-16</td><td>VBZH26</td><td class="t">LUIS BORDA</td><td>56998755205</td><td class="t">R&amp;M Contracts</td><td>10</td><td>5</td><td class="t"><span class="pill p-bad">top-box</span></td></tr>
+          <tr><td>2609175656156</td><td>2026-09-16</td><td>VSJX21</td><td class="t">JOSE MUÑOZ</td><td>56972939131</td><td class="t">GARANTIA FABRICA CAMIONES</td><td>10</td><td>5</td><td class="t"><span class="pill p-bad">top-box</span></td></tr>
+          <tr><td>2609095653474</td><td>2026-09-08</td><td>(vacío)</td><td class="t">(vacío)</td><td>(vacío)</td><td class="t">(vacío)</td><td>9</td><td>5</td><td class="t"><span class="pill p-warn">sin identidad</span></td></tr>
+          <tr><td>2609115654253</td><td>2026-09-10</td><td>SRTF99</td><td class="t">CAMILO</td><td>56993134479</td><td class="t">R&amp;M Contracts</td><td>10</td><td>5</td><td class="t"><span class="pill p-bad">top-box</span></td></tr>
+          <tr><td>2609115654254</td><td>2026-09-10</td><td>—</td><td class="t">—</td><td>—</td><td class="t">—</td><td>—</td><td>—</td><td class="t"><span class="pill p-neu">sin detalle</span></td></tr>
+          <tr><td>2609095653475</td><td>2026-09-08</td><td>—</td><td class="t">—</td><td>—</td><td class="t">—</td><td>—</td><td>—</td><td class="t"><span class="pill p-neu">sin detalle</span></td></tr>
+          <tr><td>2609085652722</td><td>2026-09-04</td><td>—</td><td class="t">—</td><td>—</td><td class="t">—</td><td>—</td><td>—</td><td class="t"><span class="pill p-neu">sin detalle</span></td></tr>
+          <tr><td>2609085652723</td><td>2026-09-04</td><td>—</td><td class="t">—</td><td>—</td><td class="t">—</td><td>—</td><td>—</td><td class="t"><span class="pill p-neu">sin detalle</span></td></tr>
+          <tr><td>2609235657978</td><td>2026-09-22</td><td>SHJK86</td><td class="t">MARIANELA</td><td>56966698557</td><td class="t">TRANSPORTES ABOINTERNACIONAL SPA</td><td>—</td><td>—</td><td class="t"><span class="pill p-ok">pendiente</span></td></tr>
+          <tr><td>2609235657979</td><td>2026-09-22</td><td>VRYT18</td><td class="t">ERWIN LOPEZ</td><td>56988520515</td><td class="t">GARANTIA FABRICA CAMIONES</td><td>—</td><td>—</td><td class="t"><span class="pill p-ok">pendiente</span></td></tr>
+          <tr><td>2609235657980</td><td>2026-09-22</td><td>SKJX38</td><td class="t">CEL CUELLAR</td><td>56978094536</td><td class="t">TRANSPORTES DE COMBUSTIBLES CHILE LTDA</td><td>—</td><td>—</td><td class="t"><span class="pill p-ok">pendiente</span></td></tr>
+          <tr><td>2609235657982</td><td>2026-09-22</td><td>4116958</td><td class="t">DARWIN MARIN</td><td>56992235236</td><td class="t">GARANTIA FABRICA CAMIONES</td><td>—</td><td>—</td><td class="t"><span class="pill p-ok">pendiente</span></td></tr>
+          <tr><td>2609235657983</td><td>2026-09-22</td><td>KKPX43</td><td class="t">BELTRAN AHUMADA</td><td>56942478976</td><td class="t">AVANT INDUSTRIAL SPA</td><td>—</td><td>—</td><td class="t"><span class="pill p-ok">pendiente</span></td></tr>
+          <tr><td>2609235657984</td><td>2026-09-22</td><td>RXDY58</td><td class="t">CAMILO</td><td>56993134479</td><td class="t">R&amp;M Contracts</td><td>—</td><td>—</td><td class="t"><span class="pill p-ok">pendiente</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Idéntica cifra = lectura directa de los pantallazos del deck. Las celdas «—» no aparecen en el deck para ese registro; «(vacío)» = la celda existe y está en blanco.</p>
+  </section>
+
+  <!-- S5 CIERRE -->
+  <section id="siguiente">
+    <div class="shead"><h2>Para cerrar la verificación</h2><span>lo que falta para descartar fraude</span></div>
+    <div class="card"><ul class="tight" id="lista-pasos">
+      <li><b>Pedir el export completo</b> del tablero Dapresy en Excel/CSV — con <b>fecha y hora de respuesta</b>, canal y estado (completo/parcial), y el detalle de las 4 respuestas que solo aparecen en el listado (<span class="mono">…5654254 · …5653475 · …5652722 · …5652723</span>). El deck solo muestra una parte.</li>
+      <li><b>Revisar los 3 registros sin identidad con nota</b> (<span class="mono">…5656544 · …5656150 · …5653474</span>): confirmar si corresponden a un servicio real o fueron cargados a mano.</li>
+      <li><b>Validar el origen del archivo con el proveedor:</b> ¿«Customer Data Demo» es una plantilla o la data real de Iquique? La respuesta cambia todo el análisis.</li>
+      <li><b>Cruzar cada Respondent ID contra las órdenes de trabajo / visitas</b> del 04 al 23 de septiembre, para confirmar que el servicio existió y que el cliente es el titular.</li>
+      <li><b>Confirmar la relación de flota:</b> el teléfono <span class="mono">56993134479</span> y las patentes correlativas (KKPX42/43) — normal si es una empresa con varios camiones, pero conviene dejarlo por escrito.</li>
+      <li><b>Repetir este chequeo con el export completo:</b> IDs duplicados, teléfonos repetidos, tiempos de respuesta anómalos (todos el mismo día/minuto) y notas agrupadas por asesor son las señales que sí permitirían hablar de fraude.</li>
+    </ul></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span class="tag">Cómo se obtuvo</span>
+  El .ppt (4 diapositivas) contiene solo imágenes: 2 pantallazos del tablero Dapresy (tablas anchas) y un listado de 14 respuestas. Se extrajeron las imágenes del archivo y se transcribió cada tabla; los valores se leyeron de las capturas, no de una base de datos. Para un veredicto definitivo se requiere el export completo del proveedor (ver sección final).
+</footer>
+</body>
+</html>

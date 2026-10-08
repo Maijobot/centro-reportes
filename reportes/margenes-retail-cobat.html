@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Márgenes Retail (COBAT) — Zona Norte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b2239; --navy2:#12324f; --blue:#2e75b6; --blue-l:#9ec6e8; --cyan:#3fa9d6;
+  --amber:#e0a33e; --red:#cf5b52; --green:#3f9d6b; --violet:#7b6cb5;
+  --bg:#eef1f5; --card:#ffffff; --line:#dde4ea; --muted:#697b8c; --ink:#132638;
+  --sans:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin:0 auto;padding:0 26px 72px}
+.hero{background:var(--navy);color:#fff;padding:30px 0 26px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#7fb4dd;margin:0 0 10px}
+h1{font-size:33px;line-height:1.12;margin:0 0 8px;font-weight:700;letter-spacing:-.015em}
+.hero p.sub{margin:0;color:#a9c3d8;font-size:14.5px;max-width:900px;line-height:1.55}
+.hero .meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px;font-size:12.5px;color:#8fb2cd;font-family:var(--mono);letter-spacing:.02em}
+.hero .meta b{color:#fff;font-weight:600}
+.callout{background:#12324f;border-left:3px solid var(--amber);padding:12px 16px;margin:18px 0 0;font-size:13px;color:#d7e5f0;line-height:1.55}
+.callout b{color:#fff}
+.filters{position:sticky;top:0;z-index:20;background:rgba(238,241,245,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:13px 0;margin-bottom:26px}
+.filters .wrap{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:0}
+.filters .lbl{font-size:12px;color:var(--muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-right:4px}
+.chip{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:7px 15px;font-size:13px;font-family:var(--sans)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:30px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 16px 14px}
+.kpi .k{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:9px;line-height:1.3}
+.kpi .v{font-size:25px;font-weight:700;letter-spacing:-.02em;font-family:var(--mono);line-height:1.05}
+.kpi .d{font-size:11.5px;color:var(--muted);margin-top:6px}
+section{margin-bottom:32px}
+.shead{display:flex;align-items:baseline;gap:12px;margin:0 0 13px}
+.shead h2{font-size:16.5px;margin:0;font-weight:600;letter-spacing:-.01em}
+.shead span{font-size:12.5px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1.06fr .94fr;gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px 14px}
+.card h3{margin:0 0 4px;font-size:14px;font-weight:600}
+.card .cap{margin:0 0 14px;font-size:12px;color:var(--muted)}
+.legend{display:flex;gap:15px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:right;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);font-weight:500;padding:0 10px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+td{padding:9px 10px;border-bottom:1px solid #eef2f5;text-align:right;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+td.t{font-family:var(--sans);font-size:13px;text-align:left;white-space:normal}
+td.t b{font-weight:600}
+td.t small{color:var(--muted);font-family:var(--mono);font-size:11px}
+tbody tr:hover td{background:#f7fafc}
+tr.tot td{font-weight:700;border-top:1.5px solid var(--line);border-bottom:none;background:#f7fafc}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-family:var(--mono)}
+.p-ok{background:#e6f4ec;color:#2c7a52}.p-warn{background:#fdf1dc;color:#9a6a15}
+.p-bad{background:#fbe9e7;color:#a83b31}.p-neu{background:#eceff3;color:#5b6b7a}
+.bar-mini{display:inline-block;height:7px;border-radius:3px;background:var(--blue-l);vertical-align:middle;margin-left:8px}
+.foot{border-top:1px solid var(--line);margin-top:34px;padding-top:16px;font-size:12px;color:var(--muted);line-height:1.65}
+.foot b{color:var(--ink)}
+@media(max-width:1080px){.kpis{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
+@media(max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}h1{font-size:24px}.wrap{padding:0 16px 56px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Scania Zona Norte · Gerencia Regional · COBAT</p>
+    <h1>Márgenes operacionales Retail — Zona Norte</h1>
+    <p class="sub">Productividad, eficiencia, billability y utilización por sucursal.
+       Estos son los drivers directos del margen del taller: horas vendidas sobre horas compradas.
+       El COBAT financiero está a nivel país, por eso el margen por sucursal se lee aquí en horas.</p>
+    <div class="meta">
+      <span>Período MTD <b>Febrero 2023</b></span>
+      <span>Período YTD <b>YTD Feb 2023</b></span>
+      <span>Fuente <b>Márgenes Retail_COBAT.xlsx · hoja COBAT</b></span>
+      <span>Cobertura <b>11 sucursales Zona Norte</b></span>
+    </div>
+    <div class="callout">
+      <b>Lectura honesta.</b> El archivo no trae margen financiero (CLP) desagregado por sucursal — los COBAT
+      Workshop/Parts están consolidados CL1 Chile. Este dashboard usa lo que sí está por sucursal:
+      productividad = horas productivas / horas compradas · eficiencia = horas facturadas / horas productivas ·
+      billability = horas facturadas / horas compradas · utilización = horas productivas / horas disponibles.
+    </div>
+  </div>
+</header>
+
+<div class="filters">
+  <div class="wrap">
+    <span class="lbl">Vista</span>
+    <button class="chip" aria-pressed="true">MTD Feb-2023</button>
+    <button class="chip" aria-pressed="false">YTD Feb-2023</button>
+    <span class="lbl" style="margin-left:14px">Ámbito</span>
+    <button class="chip" aria-pressed="true">Zona Norte (11)</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="kpis">
+    <div class="kpi">
+      <div class="k">Mecánicos activos</div>
+      <div class="v">62</div>
+      <div class="d">Suma Zona Norte · MTD</div>
+    </div>
+    <div class="kpi">
+      <div class="k">Horas facturadas MTD</div>
+      <div class="v">6.187</div>
+      <div class="d">vs 6.679 YTD Feb</div>
+    </div>
+    <div class="kpi">
+      <div class="k">Productividad ponderada</div>
+      <div class="v">63,3%</div>
+      <div class="d">Horas prod / horas compradas</div>
+    </div>
+    <div class="kpi">
+      <div class="k">Billability ponderada</div>
+      <div class="v">63,6%</div>
+      <div class="d">Horas fact / horas compradas</div>
+    </div>
+    <div class="kpi">
+      <div class="k">Eficiencia ponderada</div>
+      <div class="v">100,4%</div>
+      <div class="d">Horas fact / horas productivas</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>Tabla de márgenes operacionales por sucursal</h2>
+    <span>MTD Feb-2023 · ordenado por billability descendente</span>
+  </div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Sucursal</th>
+          <th>Mec</th>
+          <th>H. Compradas</th>
+          <th>H. No Disp.</th>
+          <th>H. Productivas</th>
+          <th>H. Facturadas</th>
+          <th>Productividad</th>
+          <th>Eficiencia</th>
+          <th>Billability</th>
+          <th>Utilización</th>
+          <th>Semáforo</th>
+        </tr>
+      </thead>
+      <tbody id="tbl-mtd"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="grid2">
+    <div class="card">
+      <h3>Ranking de billability MTD</h3>
+      <p class="cap">Barras: horas facturadas / horas compradas. Verde ≥90% · Ámbar 60-90% · Rojo &lt;60%.</p>
+      <svg id="rank-svg" viewBox="0 0 720 480"></svg>
+    </div>
+    <div class="card">
+      <h3>MTD vs YTD por sucursal</h3>
+      <p class="cap">Productividad y billability. Barra clara = MTD Feb, barra oscura = YTD Feb.</p>
+      <svg id="cmp-svg" viewBox="0 0 720 480"></svg>
+      <div class="legend">
+        <span><i style="background:var(--blue-l)"></i>MTD Feb-2023</span>
+        <span><i style="background:var(--navy)"></i>YTD Feb-2023</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>Lectura por sucursal — dónde está el margen y dónde se fuga</h2>
+    <span>Diagnóstico operacional basado en los tres ratios COBAT</span>
+  </div>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Sucursal</th>
+          <th style="text-align:left">Diagnóstico</th>
+          <th>Prioridad</th>
+        </tr>
+      </thead>
+      <tbody id="tbl-diag"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="grid2">
+    <div class="card">
+      <h3>Estructura de horas — Zona Norte MTD</h3>
+      <p class="cap">De cada hora comprada, cuánto termina facturada vs quedó en no disponible o improductiva.</p>
+      <svg id="stack-svg" viewBox="0 0 720 260"></svg>
+    </div>
+    <div class="card">
+      <h3>Qué no ves en este dashboard</h3>
+      <p class="cap">Datos que el archivo NO contiene y que necesitas para cerrar el margen financiero real.</p>
+      <ul style="font-size:13px;line-height:1.65;color:var(--ink);padding-left:18px;margin:6px 0 4px">
+        <li><b>GP% CLP por sucursal</b> — el COBAT Workshop/Parts está a nivel CL1 Chile, no desagregado a S13/S02/S10/etc. Para tener margen $ por sucursal necesitas exportar el reporte Sales &amp; Service por Resp. Centre.</li>
+        <li><b>Costo laboral real</b> — no hay tarifa horaria ni costo mecánico por sucursal en el archivo. Sin eso, "margen" solo es proxy en horas.</li>
+        <li><b>Parts split por sucursal</b> — la venta de repuestos (Sheet2, WsSales, Venta Mesón) está mezclada por tipo de transacción, no por Branch-site.</li>
+        <li><b>Descuentos y devoluciones</b> — la hoja MESON tiene devoluciones a proveedor, no descuentos comerciales por sucursal.</li>
+        <li><b>R&amp;M mix</b> — Sheet4 muestra reparaciones y mantenciones pero solo para S39 Peñalolén y otras del centro, no para Norte.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="foot">
+  <b>Fuente:</b> archivo <code>Margenes Retail_COBAT.xlsx</code>, hoja <b>COBAT</b> (bloques MTD y YTD, febrero 2023). Corte de datos declarado por el propio libro.<br>
+  <b>Alcance:</b> las 11 sucursales de Zona Norte — 5 propias (Iquique, Antofagasta, Calama, Copiapó, Coquimbo) y 6 CWS (Ilzauspe S32, Tandem S30, Viggo S31, Mejillones S42, Lots S44, Salvador S41). No incluye Arica ni Salamanca porque no aparecen en el libro con corte propio.<br>
+  <b>Advertencia:</b> ponderaciones calculadas sobre horas compradas / horas productivas donde había dato. Sucursales con purchased hours nulas (S30 Tandem, S31 Viggo) quedan fuera del promedio ponderado pero sí aparecen en la tabla.<br>
+  <b>Generado:</b> 29-09-2026.
+</div>
+
+</div>
+
+<script>
+const D_MTD = [
+  {id:'S13', name:'Iquique',              tipo:'Sucursal', mec:5,  purch:900,  noavail:303, prod:479, inv:614,  productivity:0.8023, efficiency:1.2818, billability:1.0285, util:0.5322},
+  {id:'S32', name:'CWS Ilzauspe',         tipo:'CWS',      mec:2,  purch:360,  noavail:196, prod:229, inv:303,  productivity:1.3963, efficiency:1.3231, billability:1.8476, util:0.6361},
+  {id:'S02', name:'Antofagasta',          tipo:'Sucursal', mec:23, purch:4140, noavail:723, prod:2258,inv:2159, productivity:0.6608, efficiency:0.9562, billability:0.6318, util:0.5454},
+  {id:'S30', name:'CWS Tandem',           tipo:'CWS',      mec:null,purch:null,noavail:null,prod:131, inv:157,  productivity:null,   efficiency:1.1985, billability:null,   util:null},
+  {id:'S31', name:'CWS Viggo',            tipo:'CWS',      mec:null,purch:null,noavail:null,prod:191, inv:228,  productivity:null,   efficiency:1.1937, billability:null,   util:null},
+  {id:'S42', name:'CWS Mejillones',       tipo:'CWS',      mec:2,  purch:360,  noavail:14,  prod:144, inv:165,  productivity:0.4162, efficiency:1.1458, billability:0.4769, util:0.4000},
+  {id:'S44', name:'CWS Lots',             tipo:'CWS',      mec:1,  purch:180,  noavail:null,prod:247, inv:278,  productivity:1.3722, efficiency:1.1255, billability:1.5444, util:1.3722},
+  {id:'S10', name:'Calama',               tipo:'Sucursal', mec:7,  purch:1260, noavail:197, prod:946, inv:743,  productivity:0.8899, efficiency:0.7854, billability:0.6990, util:0.7508},
+  {id:'S07', name:'Copiapó',              tipo:'Sucursal', mec:7,  purch:1260, noavail:428, prod:765, inv:813,  productivity:0.9195, efficiency:1.0627, billability:0.9772, util:0.6071},
+  {id:'S41', name:'CWS Salvador',         tipo:'CWS',      mec:9,  purch:1620, noavail:80,  prod:124, inv:341,  productivity:0.0805, efficiency:2.7500, billability:0.2214, util:0.0765},
+  {id:'S17', name:'Coquimbo',             tipo:'Sucursal', mec:5,  purch:900,  noavail:98,  prod:401, inv:539,  productivity:0.5000, efficiency:1.3441, billability:0.6721, util:0.4456}
+];
+
+const D_YTD = {
+  'S13':{productivity:0.5972, billability:0.6345},
+  'S32':{productivity:2.3982, billability:2.1947},
+  'S02':{productivity:0.6735, billability:0.5674},
+  'S30':{productivity:null,   billability:null},
+  'S31':{productivity:0.7167, billability:0.8611},
+  'S42':{productivity:0.7434, billability:0.8997},
+  'S44':{productivity:1.1222, billability:0.5944},
+  'S10':{productivity:0.9442, billability:0.7983},
+  'S07':{productivity:0.8783, billability:0.8750},
+  'S41':{productivity:0.2462, billability:0.3470},
+  'S17':{productivity:0.4328, billability:0.4066}
+};
+
+const fmtPct = v => v==null ? '—' : (v*100).toFixed(1).replace('.',',')+'%';
+const fmtN   = v => v==null ? '—' : v.toLocaleString('es-CL');
+
+function pillBill(v){
+  if(v==null) return '<span class="pill p-neu">s/d</span>';
+  if(v>=0.90) return '<span class="pill p-ok">Sano</span>';
+  if(v>=0.60) return '<span class="pill p-warn">Atento</span>';
+  return '<span class="pill p-bad">Fuga</span>';
+}
+
+// Tabla MTD
+const rowsSorted = [...D_MTD].sort((a,b)=>{
+  const ba = a.billability==null ? -1 : a.billability;
+  const bb = b.billability==null ? -1 : b.billability;
+  return bb-ba;
+});
+document.getElementById('tbl-mtd').innerHTML = rowsSorted.map(r=>`
+  <tr>
+    <td class="t"><b>${r.id}</b> · ${r.name} <small>${r.tipo}</small></td>
+    <td>${fmtN(r.mec)}</td>
+    <td>${fmtN(r.purch)}</td>
+    <td>${fmtN(r.noavail)}</td>
+    <td>${fmtN(r.prod)}</td>
+    <td>${fmtN(r.inv)}</td>
+    <td>${fmtPct(r.productivity)}</td>
+    <td>${fmtPct(r.efficiency)}</td>
+    <td>${fmtPct(r.billability)}</td>
+    <td>${fmtPct(r.util)}</td>
+    <td>${pillBill(r.billability)}</td>
+  </tr>`).join('') + `
+  <tr class="tot">
+    <td class="t">Total Zona Norte (11)</td>
+    <td>62</td>
+    <td>11.160</td>
+    <td>2.079</td>
+    <td>5.707</td>
+    <td>6.187</td>
+    <td>63,3%</td>
+    <td>108,4%</td>
+    <td>63,6%</td>
+    <td>—</td>
+    <td></td>
+  </tr>`;
+
+// Ranking billability
+(function(){
+  const svg = document.getElementById('rank-svg');
+  const data = [...D_MTD].filter(d=>d.billability!=null).sort((a,b)=>b.billability-a.billability);
+  const W=720, H=480, PL=170, PR=60, PT=10, PB=20;
+  const barH = (H-PT-PB)/data.length - 6;
+  const maxV = Math.max(...data.map(d=>d.billability)) * 1.05;
+  let out = '';
+  // grid at 60%, 90%, 100%
+  [0.60, 0.90, 1.00].forEach(t=>{
+    const x = PL + (t/maxV)*(W-PL-PR);
+    out += `<line x1="${x}" y1="${PT}" x2="${x}" y2="${H-PB}" stroke="#e6ecf1" stroke-dasharray="3 3"/>`;
+    out += `<text x="${x}" y="${H-4}" text-anchor="middle" font-size="10" fill="#8a99a8" font-family="IBM Plex Mono">${(t*100)|0}%</text>`;
+  });
+  data.forEach((d,i)=>{
+    const y = PT + i*(barH+6);
+    const w = (d.billability/maxV)*(W-PL-PR);
+    const color = d.billability>=0.90 ? '#3f9d6b' : d.billability>=0.60 ? '#e0a33e' : '#cf5b52';
+    out += `<text x="${PL-8}" y="${y+barH/2+4}" text-anchor="end" font-size="12" fill="#132638" font-family="IBM Plex Sans">${d.id} · ${d.name}</text>`;
+    out += `<rect x="${PL}" y="${y}" width="${w}" height="${barH}" fill="${color}" rx="3"/>`;
+    out += `<text x="${PL+w+6}" y="${y+barH/2+4}" font-size="11.5" fill="#132638" font-family="IBM Plex Mono">${(d.billability*100).toFixed(1).replace('.',',')}%</text>`;
+  });
+  svg.innerHTML = out;
+})();
+
+// MTD vs YTD
+(function(){
+  const svg = document.getElementById('cmp-svg');
+  const data = D_MTD.filter(d=>D_YTD[d.id] && D_YTD[d.id].billability!=null);
+  const W=720, H=480, PL=170, PR=30, PT=10, PB=20;
+  const rowH = (H-PT-PB)/data.length;
+  const barH = 10;
+  const maxV = Math.max(...data.flatMap(d=>[d.billability, D_YTD[d.id].billability])) * 1.05;
+  let out='';
+  [0.60, 0.90, 1.00].forEach(t=>{
+    const x = PL + (t/maxV)*(W-PL-PR);
+    out += `<line x1="${x}" y1="${PT}" x2="${x}" y2="${H-PB}" stroke="#e6ecf1" stroke-dasharray="3 3"/>`;
+    out += `<text x="${x}" y="${H-4}" text-anchor="middle" font-size="10" fill="#8a99a8" font-family="IBM Plex Mono">${(t*100)|0}%</text>`;
+  });
+  data.forEach((d,i)=>{
+    const y = PT + i*rowH;
+    const wM = (d.billability/maxV)*(W-PL-PR);
+    const wY = (D_YTD[d.id].billability/maxV)*(W-PL-PR);
+    out += `<text x="${PL-8}" y="${y+rowH/2+3}" text-anchor="end" font-size="12" fill="#132638" font-family="IBM Plex Sans">${d.id} · ${d.name}</text>`;
+    out += `<rect x="${PL}" y="${y+rowH/2-barH-1}" width="${wM}" height="${barH}" fill="#9ec6e8" rx="2"/>`;
+    out += `<rect x="${PL}" y="${y+rowH/2+1}" width="${wY}" height="${barH}" fill="#0b2239" rx="2"/>`;
+  });
+  svg.innerHTML = out;
+})();
+
+// Stack estructura de horas
+(function(){
+  const svg = document.getElementById('stack-svg');
+  const totalPurch = 11160;
+  const totalNoAvail = 2079;
+  const totalProd = 5707;
+  const totalInv = 6187;
+  const improductive = totalPurch - totalNoAvail - totalProd; // horas dentro de compradas que no fueron productivas ni marcadas no disp
+  const W=720, H=260, PL=20, PR=20, PT=40, PB=60;
+  const barW = (W-PL-PR);
+  const barY = PT;
+  const barH = 44;
+  let x = PL;
+  const parts = [
+    {label:'Facturadas', val:totalInv, color:'#3f9d6b'},
+    {label:'Prod. no fact.', val:Math.max(totalProd-totalInv,0), color:'#9ec6e8'},
+    {label:'Improductivas', val:Math.max(improductive,0), color:'#e0a33e'},
+    {label:'No disponibles', val:totalNoAvail, color:'#cf5b52'}
+  ];
+  const totalBase = totalPurch; // scale on purchased hours
+  let out = `<text x="${PL}" y="24" font-size="12" fill="#697b8c" font-family="IBM Plex Mono">Base: 11.160 h compradas Zona Norte · Feb-2023</text>`;
+  parts.forEach((p,i)=>{
+    const w = (p.val/totalBase)*barW;
+    out += `<rect x="${x}" y="${barY}" width="${w}" height="${barH}" fill="${p.color}"/>`;
+    if(w>50){
+      out += `<text x="${x+w/2}" y="${barY+barH/2+4}" text-anchor="middle" font-size="12" font-weight="600" fill="#fff" font-family="IBM Plex Mono">${((p.val/totalBase)*100).toFixed(0)}%</text>`;
+    }
+    x += w;
+  });
+  // Legend
+  let lx = PL;
+  parts.forEach(p=>{
+    out += `<rect x="${lx}" y="${PT+barH+18}" width="10" height="10" fill="${p.color}"/>`;
+    out += `<text x="${lx+16}" y="${PT+barH+27}" font-size="11.5" fill="#132638" font-family="IBM Plex Sans">${p.label} · ${p.val.toLocaleString('es-CL')} h</text>`;
+    lx += 170;
+  });
+  // Note: inv > prod is normal (invoicing includes assist + std times)
+  out += `<text x="${PL}" y="${H-10}" font-size="10.5" fill="#8a99a8" font-family="IBM Plex Mono">Nota: en varias sucursales las horas facturadas superan a las productivas — se factura por estándar / tabla, no por hora reloj.</text>`;
+  svg.innerHTML = out;
+})();
+
+// Diagnóstico
+const DIAG = [
+  {id:'S32', name:'CWS Ilzauspe', diag:'Sobre-facturación fuerte: 184% billability, 140% productividad — o hay bolsa de horas contra R&M, o dotación real supera los 2 mecánicos registrados. Validar cierre.', prio:'Revisar antes que celebrar'},
+  {id:'S44', name:'CWS Lots', diag:'154% billability con solo 1 mecánico — el dato es matemático, no gestionable. Confirmar dotación y horas compradas.', prio:'Auditoría de dato'},
+  {id:'S07', name:'Copiapó', diag:'Casi en equilibrio (98% bill), pero 428 h no disponibles sobre 1.260 compradas (34%) — ahí está el margen que falta capturar.', prio:'Reducir no disponibles'},
+  {id:'S13', name:'Iquique', diag:'103% billability sana, 80% productividad. Sucursal ancla del norte funcionando dentro de rango.', prio:'Mantener'},
+  {id:'S10', name:'Calama', diag:'89% productividad pero solo 70% billability y 79% eficiencia — se produce pero no se factura todo. Revisar cierres de OT.', prio:'Cierre de OT'},
+  {id:'S17', name:'Coquimbo', diag:'50% productividad con eficiencia 134% — trabajan poco pero cuando trabajan facturan bien. Falta carga de trabajo.', prio:'Alimentar taller'},
+  {id:'S42', name:'CWS Mejillones', diag:'47% billability, 41% productividad — subutilizado. Revisar contrato CWS y volumen faenas.', prio:'Revisar contrato'},
+  {id:'S02', name:'Antofagasta', diag:'23 mecánicos, 63% billability, 95% eficiencia. Tamaño hace que cada punto valga mucho — subir billability a 75% son ~500 h/mes adicionales.', prio:'Palanca principal Norte'},
+  {id:'S41', name:'CWS Salvador', diag:'Solo 22% billability con 9 mecánicos y 1.620 h compradas — el peor caso operacional del norte. Foco urgente: aquí se pierde margen todos los meses.', prio:'CRÍTICO'},
+  {id:'S30', name:'CWS Tandem', diag:'Sin dotación ni horas compradas registradas, pero factura 157 h. Dato inconsistente — cargarse contra qué mecánico.', prio:'Regularizar registro'},
+  {id:'S31', name:'CWS Viggo', diag:'Mismo caso que Tandem — factura 228 h sin dotación registrada. Regularizar.', prio:'Regularizar registro'}
+];
+function pillPrio(p){
+  if(p.includes('CRÍTICO')) return '<span class="pill p-bad">'+p+'</span>';
+  if(p.includes('celebrar')||p.includes('Auditoría')||p.includes('inconsist')||p.includes('Regularizar')) return '<span class="pill p-warn">'+p+'</span>';
+  if(p==='Mantener') return '<span class="pill p-ok">'+p+'</span>';
+  return '<span class="pill p-neu">'+p+'</span>';
+}
+document.getElementById('tbl-diag').innerHTML = DIAG.map(d=>`
+  <tr>
+    <td class="t"><b>${d.id}</b> · ${d.name}</td>
+    <td class="t">${d.diag}</td>
+    <td>${pillPrio(d.prio)}</td>
+  </tr>`).join('');
+</script>
+
+</body>
+</html>
