@@ -171,7 +171,7 @@ a{color:var(--blue-500)}
 .btn-open[disabled],span.btn-open[aria-disabled]{background:var(--g-200);color:var(--g-600);cursor:not-allowed}
 a.btn-open{text-decoration:none}
 /* Toda la tarjeta abre el reporte (mejor para tocar en el teléfono) */
-.card a.btn-open::after{content:"";position:absolute;inset:0;z-index:1;border-radius:var(--r)}
+.card[data-url]{cursor:pointer}
 .card a.btn-open:focus-visible{outline:3px solid var(--blue-300);outline-offset:2px}
 .card .updated{font-size:11.5px;color:var(--g-400);white-space:nowrap}
 
@@ -610,7 +610,7 @@ function render(){
   var grid = $('#grid'), empty = $('#empty');
   grid.innerHTML = list.map(function(it){
     var tagTipo = norm(it.tipo) || 'html';
-    return '<article class="card' + (it.activo ? '' : ' off') + '">' +
+    return '<article class="card' + (it.activo ? '' : ' off') + '"' + (it.url ? ' data-url="' + esc(it.url) + '"' : '') + '>' +
       '<div class="top"><span class="ico">' + iconFor(it.tipo) + '</span>' +
       '<div style="min-width:0"><h3>' + esc(it.nombre) + '</h3>' +
       (it.descripcion ? '<p class="desc">' + esc(it.descripcion) + '</p>' : '') + '</div></div>' +
@@ -812,6 +812,13 @@ window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); 
 
 /* ------------------------------- init ----------------------------------- */
 function bind(){
+  $('#grid').addEventListener('click', function(e){
+    if (e.target.closest && e.target.closest('a')) return;   // el enlace real abre por su cuenta
+    var card = e.target.closest ? e.target.closest('.card') : null;
+    if (!card) return;
+    var a = card.querySelector('a.btn-open');
+    if (a) a.click();
+  });
   $('#q').addEventListener('input', function(e){
     state.q = e.target.value;
     $('#qClear').classList.toggle('hidden', !state.q);
