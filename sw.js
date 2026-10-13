@@ -1,6 +1,11 @@
 const CACHE = 'cr-zn-v2';
 const SCOPE = self.registration ? new URL(self.registration.scope).pathname.replace(/\/+$/, '') : '';
-self.addEventListener('install', function(){ self.skipWaiting(); });
+self.addEventListener('install', function(e){
+  self.skipWaiting();
+  e.waitUntil(caches.open(CACHE).then(function(c){
+    return c.addAll(['./index.html', './manifest.webmanifest']);
+  }).catch(function(){}));
+});
 self.addEventListener('activate', function(e){
   e.waitUntil(
     caches.keys().then(function(ks){
