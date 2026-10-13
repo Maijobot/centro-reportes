@@ -1228,7 +1228,7 @@ function qaList(){
   ];
 }
 function renderQA(){
-  document.getElementById('qaGrid').innerHTML = qaList().map(function(c){
+  document.getElementById('qaGrid').innerHTML = (window.qaList||qaList)().map(function(c){
     var col = c.st==='OK' ? {b:'#3FB6A2',f:'rgba(63,182,162,.14)'} : c.st==='INFO' ? {b:'#E9A73C',f:'rgba(233,167,60,.14)'} : {b:'#E4574B',f:'rgba(228,87,75,.14)'};
     return '<div class="qcard" style="border-left-color:'+col.b+'">'
       + '<div class="top"><span class="st" style="background:'+col.f+';color:'+col.b+'">'+c.st+'</span></div>'
@@ -1484,6 +1484,11 @@ function readUrl(u){
 })();
 renderNotas();
 renderQA();
+/* Expone los internos a los bloques posteriores (conciliación WIP CL, self-update) */
+window.render=render; window.renderQA=renderQA; window.qaList=qaList;
+window.applyData=applyData; window.handleRows=handleRows; window.rowsToOts=rowsToOts; window.upMsg=upMsg;
+window.ALL=ALL; window.DIM=DIM; window.SITES=SITES; window.META=META; window.DATA=DATA;
+window.sum=sum; window.f0=f0; window.f1=f1; window.esc=esc; window.setPage=setPage;
 render();
 setPage('resumen');
 })();
@@ -1534,7 +1539,6 @@ function applyHorasZN(rows, fuente){
   upMsg('ok','Used time AVG actualizado ('+fuente+')'+(nuevos? ' · '+nuevos+' sucursales nuevas':'')+'. El %WIP usa el promedio ene–sep, igual que el informe nacional.');
 }
 (function(){
-  if (typeof qaList !== 'function') return;   /* qaList vive en el IIFE principal del panel */
   var _qa = qaList;
   qaList = function(){
     var cards = _qa();
