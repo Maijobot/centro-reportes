@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard NPS Servicio · Scania Zona Norte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EFF1ED; --panel:#FFFFFF; --ink:#0C1822; --muted:#5E6C76; --rule:#D6DAD3;
+  --navy:#0B2A4A; --navy-2:#123A63; --red:#B23A2C; --amber:#BE8318; --green:#1C7553; --focus:#E4572E;
+  --shadow:0 1px 2px rgba(12,24,34,.06), 0 8px 24px -18px rgba(12,24,34,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
+  font-size:14px; line-height:1.45; -webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(var(--rule) 1px, transparent 1px),linear-gradient(90deg,var(--rule) 1px, transparent 1px);
+  background-size:96px 96px; background-position:-1px -1px;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:26px 22px 60px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- header ---------- */
+header.top{border-top:3px solid var(--navy);padding-top:14px;margin-bottom:22px}
+.eyebrow{font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.eyebrow b{color:var(--navy)}
+h1{font-size:clamp(26px,4.2vw,42px);line-height:1.02;letter-spacing:-.028em;font-weight:800;margin:9px 0 0;max-width:16ch}
+h1 em{font-style:normal;color:var(--focus)}
+.sub{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:12.5px;color:var(--muted)}
+.sub span b{color:var(--ink);font-weight:600}
+.kpirow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:22px}
+.kpi{background:var(--panel);padding:15px 16px 13px}
+.kpi .l{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.kpi .v{font-size:33px;font-weight:600;letter-spacing:-.03em;margin-top:5px;line-height:1}
+.kpi .f{font-size:11.5px;color:var(--muted);margin-top:5px}
+.kpi.hero{background:var(--navy);color:#fff}
+.kpi.hero .l{color:#9DB6CF}
+.kpi.hero .f{color:#9DB6CF}
+.kpi.hero .v{color:#fff}
+
+/* ---------- semaforo ---------- */
+.seclabel{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:30px 0 11px;border-bottom:1px solid var(--rule);padding-bottom:7px}
+.seclabel h2{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin:0;color:var(--navy)}
+.seclabel .hint{font-size:11.5px;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.tile{
+  appearance:none;text-align:left;cursor:pointer;background:var(--panel);border:1px solid var(--rule);
+  border-top:3px solid var(--muted);padding:12px 13px 13px;font-family:inherit;color:inherit;
+  display:flex;flex-direction:column;gap:9px;transition:transform .14s ease, box-shadow .14s ease;
+}
+.tile:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.tile[aria-pressed="true"]{box-shadow:0 0 0 2px var(--navy), var(--shadow)}
+.tile .tn{font-size:12.5px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.tile .tv{font-size:29px;font-weight:600;letter-spacing:-.035em;line-height:1}
+.tile .ts{font-size:10.5px;color:var(--muted)}
+.gauge{position:relative;height:5px;background:#E4E8E2;margin-top:1px}
+.gauge i{position:absolute;inset:0 auto 0 0;background:var(--navy)}
+.gauge u{position:absolute;top:-3px;width:2px;height:11px;background:var(--ink)}
+.stack{display:flex;height:5px;background:#E4E8E2}
+.stack i{display:block;height:100%}
+.tile.region{border-top-color:var(--navy)}
+
+/* ---------- grid ---------- */
+.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;margin-top:14px}
+.card{background:var(--panel);border:1px solid var(--rule);padding:17px 18px 18px}
+.card h3{font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin:0 0 3px;color:var(--navy)}
+.card .note{font-size:11.5px;color:var(--muted);margin:0 0 15px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center}
+.bar .bl{font-size:12.5px;font-weight:500}
+.bar .bn{font-size:12.5px;font-weight:600}
+.bar .track{grid-column:1/-1;height:8px;background:#E9ECE7;position:relative}
+.bar .track i{position:absolute;inset:0 auto 0 0;background:var(--navy-2)}
+.bar.top .track i{background:var(--focus)}
+.bar.top .bl{font-weight:700}
+.bar.top .bn{color:var(--focus)}
+.empty{font-size:12.5px;color:var(--muted);padding:14px 0}
+
+.dist{display:flex;height:26px;margin:6px 0 12px}
+.dist i{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--muted)}
+.legend b{display:inline-block;width:9px;height:9px;margin-right:6px}
+.trend{display:flex;align-items:flex-end;gap:5px;height:92px;margin-top:16px;border-bottom:1px solid var(--rule);padding-bottom:0}
+.trend div{flex:1;position:relative;background:var(--navy-2);min-height:2px}
+.trend div span{position:absolute;bottom:-19px;left:0;right:0;text-align:center;font-size:9.5px;color:var(--muted);font-family:"IBM Plex Mono",monospace}
+.trend div em{position:absolute;top:-15px;left:0;right:0;text-align:center;font-size:9.5px;font-style:normal;color:var(--muted);font-family:"IBM Plex Mono",monospace}
+.trendcap{font-size:11px;color:var(--muted);margin-top:26px}
+
+/* ---------- tablas ---------- */
+table{width:100%;border-collapse:collapse;margin-top:4px}
+th{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:700;padding:0 10px 8px 0;border-bottom:1px solid var(--ink)}
+td{font-size:12.5px;padding:10px 10px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.num{font-family:"IBM Plex Mono",monospace;font-weight:600;white-space:nowrap}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border:1px solid var(--rule);color:var(--muted);white-space:nowrap;margin:0 4px 3px 0}
+.tag.warn{border-color:#E3C08A;color:#8A5F10;background:#FDF6E9}
+.score{display:inline-block;min-width:24px;text-align:center;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:11.5px;padding:2px 5px;color:#fff}
+.s1{background:#8E2E22}.s2{background:var(--red)}.s3{background:#C0642F}
+.quote{color:#22303B}
+.muted{color:var(--muted)}
+.flag{background:#FDF6E9;border:1px solid #E9D2A6;padding:13px 15px;font-size:12.5px;margin-top:14px}
+.flag b{color:#8A5F10}
+footer{margin-top:34px;border-top:1px solid var(--rule);padding-top:14px;font-size:11.5px;color:var(--muted);display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px}
+footer b{color:var(--ink);font-weight:600}
+@media(max-width:1080px){.tiles{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.kpirow{grid-template-columns:repeat(2,1fr)}footer{grid-template-columns:1fr}}
+@media(max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}.kpirow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Scania Chile · <b>Gerencia Regional Zona Norte</b> · Encuesta NPS Servicio</div>
+  <h1>Dónde se pierde la <em>recomendación</em> del cliente</h1>
+  <div class="sub">
+    <span>Periodo <b>01 ene – 29 sep 2026</b></span>
+    <span>Fuente <b>Encuesta NPS Servicio · Región Norte (CL)</b></span>
+    <span>Sucursales <b>Antofagasta · Calama · Iquique · Coquimbo · Copiapó</b></span>
+  </div>
+  <div class="kpirow" id="kpis"></div>
+</header>
+
+<div class="seclabel">
+  <h2>Semáforo de sucursales</h2>
+  <div class="hint">Seleccione una sucursal para ver sus motivos y su plan de acción</div>
+</div>
+<div class="tiles" id="tiles"></div>
+
+<div class="seclabel" style="margin-top:26px">
+  <h2 id="sel-title">Región Norte</h2>
+  <div class="hint" id="sel-hint"></div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>Motivos de insatisfacción</h3>
+    <p class="note" id="pareto-note"></p>
+    <div class="bars" id="bars"></div>
+  </div>
+  <div class="card">
+    <h3>Composición de las respuestas</h3>
+    <p class="note">Promotores (9-10) · Pasivos (7-8) · Detractores (1-6)</p>
+    <div class="dist" id="dist"></div>
+    <div class="legend" id="legend"></div>
+    <h3 style="margin-top:22px">Evolución mensual del NPS</h3>
+    <p class="note">Enero a septiembre 2026</p>
+    <div class="trend" id="trend"></div>
+    <div class="trendcap" id="trendcap"></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <h3 id="plan-title">Plan de acción</h3>
+  <p class="note" id="plan-note"></p>
+  <table><thead><tr><th style="width:34px">#</th><th>Acción</th><th>Causa raíz observada</th><th>Responsable</th><th style="width:86px">Plazo</th><th style="width:190px">Indicador de éxito</th></tr></thead>
+  <tbody id="plan"></tbody></table>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <h3 id="casos-title">Casos críticos</h3>
+  <p class="note" id="casos-note"></p>
+  <table><thead><tr><th style="width:82px">Fecha</th><th style="width:44px">Nota</th><th style="width:132px">Cliente</th><th style="width:170px">Empresa</th><th>Comentario del cliente</th><th style="width:150px">Motivo asignado</th></tr></thead>
+  <tbody id="casos"></tbody></table>
+</div>
+
+<div class="flag" id="flag"></div>
+
+<footer>
+  <div>
+    <b>Cómo leer este tablero.</b> El NPS se calcula como (% promotores − % detractores) sobre las respuestas de la encuesta de servicio del periodo. La Región Norte cerró el periodo con <b id="fn"></b> respuestas.
+  </div>
+  <div>
+    <b>Metodología de motivos.</b> Los motivos se asignan sobre los comentarios abiertos de las respuestas con nota ≤ 8; un mismo comentario puede aportar a más de un motivo, por lo que la suma de menciones supera el número de casos.
+  </div>
+  <div>
+    <b>Nota sobre datos.</b> Se excluyeron los teléfonos de contacto de este informe. Datos de encuesta al 01 ene – 29 sep 2026. Umbrales del semáforo (supuesto de trabajo): verde ≥ 90, ámbar 85–89,9, rojo &lt; 85.
+  </div>
+</footer>
+</div>
+
+<script>
+const DATA = {"region": {"n": 1184, "nps": 89.6, "prom": 1096, "pas": 53, "det": 35, "sat": 4.85, "cats": {"Calidad técnica y retrabajo": 14, "Demora y tiempos de atención": 12, "Trato y atención del personal": 9, "Aseo y estado de entrega de la unidad": 6, "Comunicación y seguimiento": 5, "Capacidad de taller y horas disponibles": 5, "Asistencia en ruta y emergencias": 3, "Cobros, costos y repuestos": 3, "Otros (expectativas, contacto indebido)": 3, "Infraestructura y seguridad": 2, "Documentación y facturación": 2}, "months": [{"m": "2026-01", "n": 118, "nps": 90.7}, {"m": "2026-02", "n": 150, "nps": 88.0}, {"m": "2026-03", "n": 152, "nps": 86.8}, {"m": "2026-04", "n": 117, "nps": 86.3}, {"m": "2026-05", "n": 99, "nps": 91.9}, {"m": "2026-06", "n": 120, "nps": 90.8}, {"m": "2026-07", "n": 146, "nps": 92.5}, {"m": "2026-08", "n": 170, "nps": 93.5}, {"m": "2026-09", "n": 112, "nps": 84.8}], "casos": [], "invalidos": [], "plan": [{"a": "Instalar un tablero diario de unidades en piso en cada sucursal", "c": "La demora es el motivo n°1 de la región (12 menciones) y aparece en las 5 sucursales", "r": "Jefes de Servicio", "p": "15 días", "k": "Brecha entre hora prometida y entrega < 8%"}, {"a": "Auditoría de causa raíz en toda unidad que reingresa por la misma falla", "c": "Calidad técnica y retrabajo es el motivo n°1 (14 menciones)", "r": "Jefes de Taller", "p": "30 días", "k": "Retrabajo ≤ 3% de las OT del mes"}, {"a": "Protocolo único de entrega: lavado, inspección y registro fotográfico", "c": "6 menciones de aseo y estado de entrega repartidas en 3 sucursales", "r": "Supervisores de Taller", "p": "15 días", "k": "0 reclamos por aseo en la encuesta"}, {"a": "Llamada de cierre obligatoria al cliente antes de entregar la unidad", "c": "5 menciones de falta de comunicación y seguimiento", "r": "Jefes de Servicio", "p": "30 días", "k": "100% de OT con contacto de cierre registrado"}, {"a": "Depurar la base de contactos de la encuesta", "c": "6 encuestas no corresponden a un servicio real y 3 de ellas son detractores", "r": "Gerencia Regional + Marketing", "p": "15 días", "k": "0 encuestas a contactos no vigentes"}]}, "branches": {"Antofagasta": {"n": 345, "nps": 85.5, "prom": 310, "pas": 20, "det": 15, "sat": 4.79, "cats": {"Demora y tiempos de atención": 7, "Calidad técnica y retrabajo": 6, "Aseo y estado de entrega de la unidad": 4, "Trato y atención del personal": 4, "Comunicación y seguimiento": 3, "Otros (expectativas, contacto indebido)": 2, "Asistencia en ruta y emergencias": 1, "Capacidad de taller y horas disponibles": 1, "Cobros, costos y repuestos": 1, "Documentación y facturación": 1, "Infraestructura y seguridad": 1}, "months": [{"m": "2026-01", "n": 49, "nps": 87.8}, {"m": "2026-02", "n": 38, "nps": 81.6}, {"m": "2026-03", "n": 48, "nps": 79.2}, {"m": "2026-04", "n": 38, "nps": 73.7}, {"m": "2026-05", "n": 38, "nps": 92.1}, {"m": "2026-06", "n": 30, "nps": 80.0}, {"m": "2026-07", "n": 31, "nps": 90.3}, {"m": "2026-08", "n": 41, "nps": 97.6}, {"m": "2026-09", "n": 32, "nps": 87.5}], "casos": [{"f": "2026-03-09", "r": 1.0, "s": 1.0, "cli": "—", "emp": "—", "txt": "No solucionaron una pequeña filtración de agua en el parabrisas ( pura burocracia) y me cambiaron una manguera del retarde y en 400 km ya me avía tirado todo el refrigerante por ese mismo lado", "codes": ["CAL"]}, {"f": "2026-03-16", "r": 1.0, "s": 1.0, "cli": "Jorge B.", "emp": "GARANTIA FABRICA BUSES", "txt": "Pésima atención se sólito manutención y ni siquiera se envio la cotización estando el equipo en scania por mtto correctivo ( garantia)", "codes": ["TRA", "DOC"]}, {"f": "2026-06-10", "r": 1.0, "s": 1.0, "cli": "—", "emp": "—", "txt": "Mala atención", "codes": ["TRA"]}, {"f": "2026-07-30", "r": 1.0, "s": 2.0, "cli": "Fernando O.", "emp": "R&M Contracts", "txt": "Lento el servicio", "codes": ["DEM"]}, {"f": "2026-01-26", "r": 4.0, "s": 5.0, "cli": "Peter C.", "emp": "R&M Contracts", "txt": "Malo el aseo interior y exterior del equipo  Grasa por todos lados incluída alfombra interior", "codes": ["ASE"]}, {"f": "2026-03-23", "r": 4.0, "s": 2.0, "cli": "—", "emp": "—", "txt": "Por un síntoma de sensores en camión se tubo que llevar tres veces hasta que quisieron cambiar el sensor para finiquitar el drama y no pagan el tiempo del equipo detenido", "codes": ["CAL"]}, {"f": "2026-04-24", "r": 4.0, "s": 3.0, "cli": "Fernando A.", "emp": "R&M Contracts", "txt": "Ay personal nuevo muy mala atención hicieron cambios pero para mal", "codes": ["TRA"]}, {"f": "2026-04-06", "r": 5.0, "s": 3.0, "cli": "—", "emp": "—", "txt": "Fui el primero en llegar a hacerle la mantencion de los 20 mil y me fui de los ultimos al cierre del local ..y me dijeron q me ajendarian para otro dia por no poder actualisar el 500 R super", "codes": ["DEM", "CAP"]}, {"f": "2026-04-13", "r": 5.0, "s": 2.0, "cli": "Comercial Y.", "emp": "GW Comercial Esp Camiones", "txt": "Poca comunicación", "codes": ["COM"]}, {"f": "2026-06-22", "r": 5.0, "s": 3.0, "cli": "Segundo J.", "emp": "TRANSPORTES DIAZ SOZA LIMITADA JULIO DIAZ", "txt": "No la ban la unidad dejan manchado con grasa se suben ala unidad con sus busos sucios qe mas", "codes": ["ASE"]}, {"f": "2026-01-14", "r": 6.0, "s": 4.0, "cli": "Javier C.", "emp": "R&M Contracts", "txt": "Por la porfia de algunos jefes de recepción. Uds sabian que tuvimos un incidente por la porfia de ellos", "codes": ["TRA"]}, {"f": "2026-02-04", "r": 6.0, "s": 4.0, "cli": "—", "emp": "—", "txt": "No tenía listo en bus el día del retiro", "codes": ["DEM"]}, {"f": "2026-02-25", "r": 6.0, "s": 3.0, "cli": "Michael S.", "emp": "R&M Contracts", "txt": "En atención un 10 en el servicio un 10 pero en la entrega de la unidad por dentro de la cabina 1 la entregaron sucia. Antes la entregaban limpia", "codes": ["ASE"]}, {"f": "2026-02-04", "r": 7.0, "s": 4.0, "cli": "Juan J.", "emp": "MAQUINARIAS DEL SUR  DON CARLOS SPA", "txt": "1 el aseo de cabina  deficiente   2 me piden número de teléfono para llamar  cuando el camión estaba listo  No llamaron", "codes": ["ASE", "COM"]}, {"f": "2026-03-18", "r": 7.0, "s": 3.0, "cli": "—", "emp": "—", "txt": "Para salir contento falta que Scania tenga algún regalo.. cómo una polera o algo asi", "codes": ["OTR"]}, {"f": "2026-04-10", "r": 7.0, "s": 4.0, "cli": "—", "emp": "—", "txt": "No muy lenta la atención  Y poca información", "codes": ["DEM", "COM"]}, {"f": "2026-05-11", "r": 7.0, "s": 3.0, "cli": "Felipe B.", "emp": "EMPRESA DE TRANSPORTES PONCE Y LICCI LTDA. .", "txt": "Poco detalle de la atención al equipo", "codes": ["CAL"]}, {"f": "2026-06-01", "r": 7.0, "s": 4.0, "cli": "—", "emp": "—", "txt": "Xq de lo explicado del detalle del bus no se completo al 100", "codes": ["CAL"]}, {"f": "2026-08-24", "r": 7.0, "s": 4.0, "cli": "Manuel C.", "emp": "R&M Contracts", "txt": "Cómo conducto llevo y traigo equipo y no siempre están listos para retirarsin embargo la comunicación en la recepción es buena.", "codes": ["DEM"]}, {"f": "2026-01-12", "r": 8.0, "s": 3.0, "cli": "Gomer F.", "emp": "R&M Contracts", "txt": "Faltó más empatía como empresa a clientes y conductores en hacerles presente o regalos por el servicio adquerido . Cómo gorros lápiz vasos etc.  Da una mejor imagen de Servicio y atención al cliente directo.... No solo por dinero. Sino que les importa sus clientes", "codes": ["OTR"]}, {"f": "2026-01-23", "r": 8.0, "s": 5.0, "cli": "Angel A.", "emp": "SERGIO OSVALDO RAMOS MADRID", "txt": "La tercera fue la vencida.", "codes": ["CAL"]}, {"f": "2026-02-26", "r": 8.0, "s": 5.0, "cli": "Daniel T.", "emp": "R&M Contracts", "txt": "Falta más espacio donde dejar los equipos que se llevan a mantencion  porque la mayoría de las veces se deben dejar afuera “ en la vía pública “ por adentro de sus instalaciones no tienen espacio esto implica que la entrega se deba hacer al aire libre sin ningún tipo de resguardo para el cliente", "codes": ["INF"]}, {"f": "2026-03-17", "r": 8.0, "s": 3.0, "cli": "Nicolas M.", "emp": "GW Comercial Esp Camiones", "txt": "Sobrecostos en HH y repuestos", "codes": ["COB"]}, {"f": "2026-03-20", "r": 8.0, "s": 4.0, "cli": "Cristian T.", "emp": "R&M Contracts", "txt": "En la demora", "codes": ["DEM"]}, {"f": "2026-03-20", "r": 8.0, "s": 5.0, "cli": "Alejandro H.", "emp": "COMERCIAL AGRICOLA Y TRANSPORTES TOLEDO GIANZO Y COMPANIA LT", "txt": "Muy buena la atención pero muy lento en despacho de camiones", "codes": ["DEM"]}, {"f": "2026-04-02", "r": 8.0, "s": 3.0, "cli": "Victor C.", "emp": "KAL TIRE S.A.", "txt": "No encontre la solucion a uno de los problemas que llevaba", "codes": ["CAL"]}, {"f": "2026-04-28", "r": 8.0, "s": 2.0, "cli": "Miguel V.", "emp": "EMPRESA DE TRANSPORTES RURALES SPA", "txt": "Por qué no pudieron darme la asistencia cuando la pedí y tuve que remolcar el bus para la sucursal", "codes": ["ASI"]}], "invalidos": [{"f": "2026-09-28", "r": 1.0, "why": "Encuestado no vigente"}, {"f": "2026-09-10", "r": 1.0, "why": "Cliente sin flota Scania"}, {"f": "2026-05-15", "r": 7.0, "why": "Servicio a nombre de la empresa, no del contacto"}], "plan": [{"a": "Reducir la brecha entre la hora prometida y la entrega real", "c": "7 menciones de demora; unidades que no están listas el día del retiro", "r": "Jefe de Servicio + Supervisores de Taller", "p": "15 días", "k": "% OT entregadas en la fecha prometida ≥ 92%"}, {"a": "Cortar el re-trabajo en las 7 unidades con nota ≤ 6 por calidad", "c": "Unidades que reingresan por la misma falla; problemas 'no resueltos'", "r": "Jefe de Taller", "p": "30 días", "k": "Retrabajo ≤ 3% de las OT del mes"}, {"a": "Protocolo de entrega: lavado interior/exterior + inspección fotográfica", "c": "4 quejas por grasa y suciedad en la cabina y el exterior", "r": "Supervisores de Taller (por turno)", "p": "15 días", "k": "0 reclamos por aseo en la encuesta mensual"}, {"a": "Llamada obligatoria de cierre de OT antes de entregar la unidad", "c": "3 menciones de falta de comunicación y de que no se avisó que el camión estaba listo", "r": "Jefe de Servicio", "p": "30 días", "k": "100% de OT con contacto de cierre registrado"}, {"a": "Revisar agenda y turnos para servicios de mantención", "c": "1 mención de falta de horas y 15 días de espera", "r": "Jefe de Servicio + Planificación", "p": "30 días", "k": "Espera de hora ≤ 5 días hábiles"}]}, "Calama": {"n": 175, "nps": 84.6, "prom": 155, "pas": 13, "det": 7, "sat": 4.76, "cats": {"Calidad técnica y retrabajo": 5, "Trato y atención del personal": 3, "Demora y tiempos de atención": 2, "Capacidad de taller y horas disponibles": 2, "Otros (expectativas, contacto indebido)": 1, "Aseo y estado de entrega de la unidad": 1}, "months": [{"m": "2026-01", "n": 19, "nps": 84.2}, {"m": "2026-02", "n": 34, "nps": 79.4}, {"m": "2026-03", "n": 18, "nps": 83.3}, {"m": "2026-04", "n": 14, "nps": 78.6}, {"m": "2026-05", "n": 11, "nps": 81.8}, {"m": "2026-06", "n": 16, "nps": 93.8}, {"m": "2026-07", "n": 19, "nps": 94.7}, {"m": "2026-08", "n": 27, "nps": 81.5}, {"m": "2026-09", "n": 17, "nps": 88.2}], "casos": [{"f": "2026-04-02", "r": 1.0, "s": 2.0, "cli": "—", "emp": "—", "txt": "Se siente bastante tenso el ambiente observé malos tratos hacia el personal administrativo", "codes": ["TRA"]}, {"f": "2026-08-03", "r": 1.0, "s": 5.0, "cli": "—", "emp": "—", "txt": "Por que molestan mucho por WhatsApp es día domingo y me están interrumpiendo mi descanso", "codes": ["OTR"]}, {"f": "2026-03-06", "r": 2.0, "s": 1.0, "cli": "Rodrigo O.", "emp": "R&M Contracts", "txt": "Porque solicité una cosa súper sencilla y no la realizaron", "codes": ["CAL"]}, {"f": "2026-02-26", "r": 3.0, "s": 1.0, "cli": "—", "emp": "—", "txt": "Falto seriedad poco profesionales.", "codes": ["TRA"]}, {"f": "2026-05-05", "r": 4.0, "s": 5.0, "cli": "Hector H.", "emp": "HECTOR HERNAN FERNANDEZ LLANQUINAO", "txt": "Si el personal se pone la camiseta el tema es que nunca hay horas disponibles para los servicios y le camion no puede estar parado 15 días esperando hora pues para entrar a taller.", "codes": ["CAP"]}, {"f": "2026-08-27", "r": 5.0, "s": 2.0, "cli": "Luis V.", "emp": "R&M Contracts", "txt": "Porque se demoran mucho en atender ellos parece tienen otras prioridades que los clientes además cuando se equivocan siempre le echan la culpa al cliente dos veces saque distinto vehículo y quedó botado afuera de la sucursal y cuando uno va y reclama ellos llaman a la empresa diciendo que entramos con prepotencia y mal educados siendo que ellos no han echo un buen trabajo de mantenimiento", "codes": ["DEM", "TRA", "CAL"]}, {"f": "2026-01-27", "r": 6.0, "s": 3.0, "cli": "Juan A.", "emp": "R&M Contracts", "txt": "En varias oportunidades que llevamos la unidad no resolvieron los detalles y aún no lo resuelven", "codes": ["CAL"]}, {"f": "2026-02-06", "r": 7.0, "s": 3.0, "cli": "Rodrigo O.", "emp": "R&M Contracts", "txt": "Tuve que yo sacar el bus del taller", "codes": ["DEM"]}, {"f": "2026-02-11", "r": 7.0, "s": 3.0, "cli": "Cristian R.", "emp": "OSCAR GILBERTO HURTADO LOPEZ TRANSPORTES EIRL", "txt": "X q la maquina volvió con fallas....", "codes": ["CAL"]}, {"f": "2026-06-10", "r": 7.0, "s": 3.0, "cli": "Gaston C.", "emp": "HORMIGONES POLPAICO S.A.", "txt": "Por qué lleve el camión x una fuga de aceite el cual la arreglaron pero a los 2 días volvió a botar aceite y a hora con más frecuencia!!!", "codes": ["CAL"]}, {"f": "2026-02-26", "r": 8.0, "s": 4.0, "cli": "Alexis G.", "emp": "R&M Contracts", "txt": "Por que dieron una hora y no fue así", "codes": ["CAP"]}, {"f": "2026-02-27", "r": 8.0, "s": 5.0, "cli": "Alejandro T.", "emp": "R&M Contracts", "txt": "El camión scania se entego muy sucio con grasa en los guardafangos e interior.", "codes": ["ASE"]}], "invalidos": [{"f": "2026-08-13", "r": 7.0, "why": "No registra visita a la sucursal"}], "plan": [{"a": "Análisis de causa raíz obligatorio en toda unidad que reingresa", "c": "5 menciones de calidad técnica y trabajos 'no realizados'", "r": "Jefe de Servicio", "p": "15 días", "k": "0 reingresos por la misma falla en 60 días"}, {"a": "Intervención de clima y trato con jefaturas y personal de contacto", "c": "3 menciones de malos tratos, ambiente tenso y 'poca seriedad'", "r": "Jefe de Servicio + Personas y Cultura", "p": "30 días", "k": "0 quejas por trato en la encuesta; encuesta interna de clima aplicada"}, {"a": "Publicar disponibilidad real de horas y no agendar sin capacidad confirmada", "c": "2 menciones de horas no disponibles y de citas incumplidas", "r": "Jefe de Servicio", "p": "15 días", "k": "Cumplimiento de citas ≥ 95%"}, {"a": "Protocolo de entrega con lavado e inspección", "c": "1 queja por unidad entregada con grasa", "r": "Supervisores de Taller", "p": "15 días", "k": "0 reclamos por aseo"}, {"a": "Prohibir contacto de encuestas y servicio fuera de horario y en fin de semana", "c": "Cliente molestó por WhatsApp un día domingo", "r": "Jefe de Servicio", "p": "7 días", "k": "0 reclamos por contacto indebido"}]}, "Iquique": {"n": 260, "nps": 96.2, "prom": 253, "pas": 4, "det": 3, "sat": 4.95, "cats": {"Asistencia en ruta y emergencias": 2, "Demora y tiempos de atención": 2, "Cobros, costos y repuestos": 1, "Calidad técnica y retrabajo": 1}, "months": [{"m": "2026-01", "n": 18, "nps": 100.0}, {"m": "2026-02", "n": 18, "nps": 100.0}, {"m": "2026-03", "n": 35, "nps": 85.7}, {"m": "2026-04", "n": 16, "nps": 100.0}, {"m": "2026-05", "n": 16, "nps": 100.0}, {"m": "2026-06", "n": 38, "nps": 100.0}, {"m": "2026-07", "n": 48, "nps": 95.8}, {"m": "2026-08", "n": 49, "nps": 98.0}, {"m": "2026-09", "n": 22, "nps": 90.9}], "casos": [{"f": "2026-07-08", "r": 2.0, "s": 1.0, "cli": "Andres R.", "emp": "TRANSPORTES CASABLANCA", "txt": "Sentí que el asesor sólo quería cambiar repuestos que no era necesario cambiarlos para así aumentar el presupuesto y cobrarme más plata", "codes": ["COB"]}, {"f": "2026-09-24", "r": 2.0, "s": 2.0, "cli": "Luis R.", "emp": "R&M Contracts", "txt": "Por qyestuce votado en plena carretera por que dejaron suelto el ( Filtro ) DF petróleo y en llegar un mecánico dejaron apoyo se demoró más de tres horas en llegar y solucionar el problema y que no sabía que era lo que pasaba .", "codes": ["ASI", "DEM"]}, {"f": "2026-03-16", "r": 4.0, "s": 3.0, "cli": "—", "emp": "—", "txt": "Porque se demoraron mucho en asistir y se demoran mucho en enviar presupuesto para dar solución", "codes": ["ASI", "DEM"]}, {"f": "2026-03-18", "r": 7.0, "s": 5.0, "cli": "Claudio C.", "emp": "NORMAN ANGELO", "txt": "Por el comportamiemton del vahiculo despues que salio de taller", "codes": ["CAL"]}], "invalidos": [], "plan": [{"a": "Reducir el tiempo de respuesta de asistencia en ruta", "c": "2 menciones: 3 horas de espera en carretera y demora en asistir", "r": "Jefe de Servicio + Asistencia Técnica", "p": "30 días", "k": "Respuesta en ruta ≤ 90 min en el 90% de los casos"}, {"a": "Autorización escrita del cliente antes de ejecutar cualquier trabajo", "c": "Percepción de cambio innecesario de repuestos para subir el presupuesto", "r": "Jefe de Servicio", "p": "15 días", "k": "100% de OT con autorización firmada"}, {"a": "Emitir el presupuesto dentro de 24 h de ingresada la unidad", "c": "Demora en el envío del presupuesto reportada por el cliente", "r": "Jefe Comercial + Jefe de Servicio", "p": "15 días", "k": "Presupuesto emitido ≤ 24 h en el 95% de las OT"}, {"a": "Documentar y replicar las prácticas que la tienen como la mejor sucursal de la zona", "c": "NPS 96,2, el más alto de la región", "r": "Gerencia Regional", "p": "30 días", "k": "Mantener NPS ≥ 95 y traspasar 3 prácticas al resto"}]}, "Coquimbo": {"n": 260, "nps": 92.7, "prom": 246, "pas": 9, "det": 5, "sat": 4.88, "cats": {"Cobros, costos y repuestos": 1, "Trato y atención del personal": 1, "Infraestructura y seguridad": 1, "Calidad técnica y retrabajo": 1, "Demora y tiempos de atención": 1, "Capacidad de taller y horas disponibles": 1}, "months": [{"m": "2026-01", "n": 23, "nps": 91.3}, {"m": "2026-02", "n": 36, "nps": 97.2}, {"m": "2026-03", "n": 30, "nps": 100.0}, {"m": "2026-04", "n": 34, "nps": 91.2}, {"m": "2026-05", "n": 20, "nps": 95.0}, {"m": "2026-06", "n": 25, "nps": 96.0}, {"m": "2026-07", "n": 32, "nps": 93.8}, {"m": "2026-08", "n": 34, "nps": 88.2}, {"m": "2026-09", "n": 26, "nps": 80.8}], "casos": [{"f": "2026-07-30", "r": 1.0, "s": 4.0, "cli": "Israel C.", "emp": "TRANSPORTES COMATS SPA", "txt": "Técnicamente no estuvo a la altura. Equipo entro por falla y salió con falla.", "codes": ["CAL"]}, {"f": "2026-09-17", "r": 1.0, "s": 1.0, "cli": "Ricardo A.", "emp": "NEVADOS DE PUCON SA", "txt": "Porque me cobraron un servicio que Yo antes de la reparación dije que no hicieran si tenia un costo  Y lo realizaron de igual maneras", "codes": ["COB"]}, {"f": "2026-09-17", "r": 3.0, "s": 3.0, "cli": "Marcelo C.", "emp": "ASTRO TRANSPORTES LTDA", "txt": "Lo de siempre con esa sucursal se debe arriesgar a robos y malos tratos de parte del gerente.", "codes": ["TRA", "INF"]}, {"f": "2026-02-26", "r": 7.0, "s": 3.0, "cli": "Eric E.", "emp": "TRANSPORTE SERENA MAR LIMITADA", "txt": "Están sobrecargados de trabajo y no pueden dedicarse mucho a uno como cliente", "codes": ["CAP"]}, {"f": "2026-06-15", "r": 7.0, "s": 4.0, "cli": "—", "emp": "—", "txt": "Hola porque en otra oportunidad que estuve en la sucursal la atención no duró más de 3 horas espectacular en otra visita fue demasiado larga la espera de 10 am hasta las 17 hrs por lo mismo", "codes": ["DEM"]}], "invalidos": [{"f": "2026-04-29", "r": 1.0, "why": "No registra visita a la sucursal"}], "plan": [{"a": "Control de autorización previa: ningún trabajo con costo sin aprobación del cliente", "c": "Cobro de un servicio que el cliente había rechazado por tener costo", "r": "Jefe de Servicio", "p": "7 días", "k": "0 reclamos por cobros no autorizados"}, {"a": "Abordar la queja por seguridad y trato en la sucursal", "c": "Relato de robos y malos tratos atribuidos a la jefatura", "r": "Gerencia Regional + Jefe de Servicio", "p": "15 días", "k": "Caso cerrado con el cliente y plan de seguridad en la sucursal"}, {"a": "Nivelar la carga de trabajo del equipo de contacto", "c": "Clientes reportan equipo sobrecargado y poca dedicación", "r": "Jefe de Servicio", "p": "30 días", "k": "Dotación de contacto vs. volumen de OT revisada"}, {"a": "Revisar el caso técnico con falla posterior a la reparación", "c": "Equipo ingresado por falla que salió con la misma falla", "r": "Jefe de Taller", "p": "15 días", "k": "0 reingresos por la misma falla"}]}, "Copiapo": {"n": 144, "nps": 88.2, "prom": 132, "pas": 7, "det": 5, "sat": 4.85, "cats": {"Comunicación y seguimiento": 2, "Capacidad de taller y horas disponibles": 1, "Aseo y estado de entrega de la unidad": 1, "Documentación y facturación": 1, "Trato y atención del personal": 1, "Calidad técnica y retrabajo": 1}, "months": [{"m": "2026-01", "n": 9, "nps": 100.0}, {"m": "2026-02", "n": 24, "nps": 87.5}, {"m": "2026-03", "n": 21, "nps": 90.5}, {"m": "2026-04", "n": 15, "nps": 100.0}, {"m": "2026-05", "n": 14, "nps": 85.7}, {"m": "2026-06", "n": 11, "nps": 72.7}, {"m": "2026-07", "n": 16, "nps": 81.2}, {"m": "2026-08", "n": 19, "nps": 100.0}, {"m": "2026-09", "n": 15, "nps": 73.3}], "casos": [{"f": "2026-02-18", "r": 1.0, "s": 1.0, "cli": "Cristofer J.", "emp": "TRANSPORTES GONZALEZ SPA", "txt": "Porque llevamos el camión en 2 oportunidades ya que quedo en mal estado con el primer arreglo", "codes": ["CAL"]}, {"f": "2026-05-04", "r": 1.0, "s": 1.0, "cli": "—", "emp": "—", "txt": "La atención pésima", "codes": ["TRA"]}, {"f": "2026-06-26", "r": 2.0, "s": 3.0, "cli": "Israel", "emp": "TRANSPORTES COMATS SPA", "txt": "Aún no llega factura  tampoco informe técnico", "codes": ["DOC"]}, {"f": "2026-09-11", "r": 4.0, "s": 3.0, "cli": "—", "emp": "—", "txt": "Mucho personal pocos atienden pasan en puras reuniones no atienden teléfonos los camiones no pueden esperar por estos inconvenientes", "codes": ["COM", "CAP"]}, {"f": "2026-02-03", "r": 7.0, "s": 4.0, "cli": "Jose G.", "emp": "R&M Contracts", "txt": "Porque me sentí así cuando pregunté por el camión no tuve respuesta", "codes": ["COM"]}, {"f": "2026-07-13", "r": 8.0, "s": 4.0, "cli": "Mauricio V.", "emp": "R&M Contracts", "txt": "Entregaron el camión sucio  trabajaron en el con los vidrios abajo", "codes": ["ASE"]}], "invalidos": [{"f": "2026-03-12", "r": 1.0, "why": "Posible suplantación de identidad"}], "plan": [{"a": "Responder el estado de la unidad al cliente dentro de 24 h", "c": "2 menciones de que no hubo respuesta al preguntar por el camión y de que no contestan teléfonos", "r": "Jefe de Servicio", "p": "15 días", "k": "100% de consultas respondidas en ≤ 24 h"}, {"a": "Cerrar la documentación pendiente: factura e informe técnico", "c": "Caso de factura e informe técnico que aún no llegan", "r": "Encargado de Administración", "p": "7 días", "k": "0 OT con documentación pendiente > 5 días"}, {"a": "Protocolo de entrega con lavado e inspección (vidrios cerrados)", "c": "Unidad entregada sucia y trabajada con los vidrios abajo", "r": "Supervisores de Taller", "p": "15 días", "k": "0 reclamos por aseo"}, {"a": "Revisar el caso de reingreso por arreglo incompleto", "c": "Unidad llevada 2 veces y que quedó en mal estado tras el primer arreglo", "r": "Jefe de Taller", "p": "15 días", "k": "0 reingresos por la misma falla"}, {"a": "Proteger el tiempo de atención al cliente frente a reuniones internas", "c": "'Mucho personal, pocos atienden, pasan en puras reuniones'", "r": "Jefe de Servicio", "p": "30 días", "k": "Bloques de atención al cliente sin reuniones internas"}]}}, "orden": ["Antofagasta", "Calama", "Iquique", "Coquimbo", "Copiapo"], "invalidos": 6, "periodo": "01 ene – 29 sep 2026", "fuente": "Encuesta NPS Servicio · Región Norte (CL)"};
+const ORD = DATA.orden, R = DATA.region, B = DATA.branches;
+const STATUS = v => v >= 90 ? ["var(--green)","#1C7553"] : v >= 85 ? ["var(--amber)","#BE8318"] : ["var(--red)","#B23A2C"];
+const statusName = v => v >= 90 ? "En meta" : v >= 85 ? "En riesgo" : "Crítico";
+const fmt = v => (v===null||v===undefined) ? "—" : String(v).replace(".", ",");
+let sel = "region";
+
+function set(id, h){ document.getElementById(id).innerHTML = h; }
+
+function renderKpis(){
+  const o = sel==="region" ? R : B[sel];
+  const [c] = STATUS(o.nps);
+  set("kpis", `
+    <div class="kpi hero"><div class="l">NPS ${sel==="region"?"Región Norte":sel}</div><div class="v mono">${fmt(o.nps)}</div><div class="f">${o.prom} promotores · ${o.det} detractores</div></div>
+    <div class="kpi"><div class="l">Respuestas</div><div class="v mono">${o.n}</div><div class="f">Periodo completo</div></div>
+    <div class="kpi"><div class="l">Satisfacción global</div><div class="v mono">${fmt(o.sat)}</div><div class="f">Escala 1 a 5</div></div>
+    <div class="kpi"><div class="l">Detractores</div><div class="v mono" style="color:${c}">${o.det}</div><div class="f">${(o.det/o.n*100).toFixed(1).replace(".",",")}% de las respuestas</div></div>`);
+}
+
+function renderTiles(){
+  const items = [["region","Región Norte",R]].concat(ORD.map(b=>[b,b,B[b]]));
+  const max = Math.max(...items.map(i=>i[2].nps));
+  set("tiles", items.map(([k,label,o])=>{
+    const [c] = STATUS(o.nps);
+    const t = o.prom + o.pas + o.det;
+    const pr = o.prom/t*100, pa = o.pas/t*100, de = o.det/t*100;
+    return `<button class="tile ${k==="region"?"region":""}" data-k="${k}" aria-pressed="${k===sel}" style="border-top-color:${c}">
+      <div class="tn"><span class="dot" style="background:${c}"></span>${label}</div>
+      <div class="tv mono">${fmt(o.nps)}</div>
+      <div class="ts">${o.n} respuestas · ${statusName(o.nps)}</div>
+      <div class="gauge"><i style="width:${o.nps}%;background:${c}"></i><u style="left:calc(${R.nps}% - 1px)"></u></div>
+      <div class="stack"><i style="width:${pr}%;background:var(--green)"></i><i style="width:${pa}%;background:var(--amber)"></i><i style="width:${de}%;background:var(--red)"></i></div>
+    </button>`;
+  }).join(""));
+  document.querySelectorAll(".tile").forEach(el=>el.addEventListener("click",()=>{sel=el.dataset.k;render();}));
+}
+
+function renderBars(){
+  const o = sel==="region" ? R : B[sel];
+  const cats = Object.entries(o.cats);
+  const max = Math.max(1, ...cats.map(c=>c[1]));
+  const casos = o.casos.length;
+  set("pareto-note", `${cats.length} motivos detectados · ${casos} comentarios con nota ≤ 8 · ${Object.values(o.cats).reduce((a,b)=>a+b,0)} menciones`);
+  if(!cats.length){ set("bars", `<div class="empty">Sin comentarios negativos clasificados en el periodo.</div>`); return; }
+  set("bars", cats.map(([k,v],i)=>`
+    <div class="bar ${i===0?"top":""}">
+      <div class="bl">${k}</div><div class="bn mono">${v}</div>
+      <div class="track"><i style="width:${v/max*100}%"></i></div>
+    </div>`).join(""));
+}
+
+function renderDist(){
+  const o = sel==="region" ? R : B[sel];
+  const t = o.prom + o.pas + o.det;
+  const pr = o.prom/t*100, pa = o.pas/t*100, de = o.det/t*100;
+  set("dist", `<i style="width:${pr}%;background:var(--green)">${pr.toFixed(0)}%</i>
+               <i style="width:${pa}%;background:var(--amber)">${pa<4?"":pa.toFixed(0)+"%"}</i>
+               <i style="width:${de}%;background:var(--red)">${de<4?"":de.toFixed(0)+"%"}</i>`);
+  set("legend", `<span><b style="background:var(--green)"></b>Promotores ${o.prom}</span>
+                 <span><b style="background:var(--amber)"></b>Pasivos ${o.pas}</span>
+                 <span><b style="background:var(--red)"></b>Detractores ${o.det}</span>`);
+}
+
+function renderTrend(){
+  const o = sel==="region" ? R : B[sel];
+  const m = o.months.filter(x=>x.n>0 && x.nps!==null);
+  const mes = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  if(!m.length){ set("trend",""); set("trendcap","Sin datos mensuales."); return; }
+  const maxv = Math.max(...m.map(x=>x.nps));
+  set("trend", m.map(x=>{
+    const h = Math.max(4, x.nps/maxv*88);
+    const [c] = STATUS(x.nps);
+    return `<div style="height:${h}px;background:${c}"><em>${fmt(x.nps)}</em><span>${mes[parseInt(x.m.slice(5),10)-1]}</span></div>`;
+  }).join(""));
+  const last = m[m.length-1], first = m[0];
+  set("trendcap", `${first.m.slice(0,4)}: ${fmt(first.nps)} en ${mes[parseInt(first.m.slice(5),10)-1]} → ${fmt(last.nps)} en ${mes[parseInt(last.m.slice(5),10)-1]} · ${m.length} meses con respuestas`);
+}
+
+function renderPlan(){
+  const o = sel==="region" ? R : B[sel];
+  const name = sel==="region" ? "Región Norte" : "Sucursal " + sel;
+  if(sel==="region"){
+    set("plan-title","Plan de acción — Región Norte");
+    set("plan-note","Prioridades transversales a las 5 sucursales. Seleccione una sucursal en el semáforo para ver su plan específico.");
+    set("plan", R.plan.map((p,i)=>`<tr>
+      <td class="num muted">${String(i+1).padStart(2,"0")}</td>
+      <td><b>${p.a}</b></td><td class="quote">${p.c}</td><td>${p.r}</td>
+      <td class="num">${p.p}</td><td class="muted">${p.k}</td></tr>`).join(""));
+    return;
+  }
+  set("plan-title","Plan de acción — " + name);
+  set("plan-note", `Construido sobre los ${o.casos.length} comentarios con nota ≤ 8 y los ${Object.values(o.cats).reduce((a,b)=>a+b,0)} motivos detectados. Responsable principal: Jefe de Servicio de la sucursal.`);
+  set("plan", o.plan.map((p,i)=>`<tr>
+      <td class="num muted">${String(i+1).padStart(2,"0")}</td>
+      <td><b>${p.a}</b></td><td class="quote">${p.c}</td><td>${p.r}</td>
+      <td class="num">${p.p}</td><td class="muted">${p.k}</td></tr>`).join(""));
+}
+
+function renderCasos(){
+  const o = sel==="region" ? R : B[sel];
+  const list = (sel==="region" ? ORD.flatMap(b=>B[b].casos) : o.casos).slice().sort((a,b)=>a.r-b.r || (a.f<b.f?1:-1));
+  set("casos-title", sel==="region" ? "Casos críticos — Región Norte" : "Casos críticos — " + sel);
+  set("casos-note", `${list.length} clientes calificaron con nota ≤ 6 en el periodo. Se listan todos, ordenados de menor a mayor nota.`);
+  set("casos", list.length ? list.map(c=>`<tr>
+      <td class="num muted">${c.f}</td>
+      <td><span class="score s${c.r<=2?1:c.r<=4?2:3}">${c.r}</span></td>
+      <td>${c.cli}</td><td class="muted">${c.emp}</td>
+      <td class="quote">${c.txt}</td>
+      <td>${c.codes.map(k=>`<span class="tag">${k}</span>`).join("")}</td></tr>`).join("")
+    : `<tr><td colspan="6" class="muted" style="padding:18px 0">Sin casos con nota ≤ 6.</td></tr>`);
+}
+
+function renderFlag(){
+  const inv = ORD.flatMap(b=>B[b].invalidos.map(i=>({b, ...i})));
+  const det = inv.filter(i=>i.r!==null && i.r<=6).length;
+  set("flag", `<b>Calidad de la muestra.</b> ${inv.length} encuestas del periodo no corresponden a un servicio real de la sucursal (encuestado sin flota, sin registro de visita, servicio a nombre de la empresa o posible suplantación). ${det} de ellas son detractores, es decir ${(det/R.det*100).toFixed(0).replace(".",",")}% de los detractores de la región. Depurar la base de contactos sube el NPS de la región a <b>90,1</b> y evita gestionar casos que no existen. Detalle: ${inv.map(i=>i.b+" ("+i.why.toLowerCase()+")").join("; ")}.`);
+}
+
+function render(){
+  renderKpis(); renderTiles(); renderBars(); renderDist(); renderTrend(); renderPlan(); renderCasos(); renderFlag();
+  const nm = sel==="region" ? "Región Norte" : "Sucursal " + sel;
+  document.getElementById("sel-title").textContent = nm;
+  document.getElementById("sel-hint").textContent = sel==="region"
+    ? "Vista consolidada de las 5 sucursales · seleccione una sucursal para ver su plan"
+    : "Motivos, composición, evolución, plan de acción y casos críticos de la sucursal";
+}
+document.getElementById("fn").textContent = R.n;
+render();
+</script>
+</body>
+</html>
