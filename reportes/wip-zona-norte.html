@@ -1534,6 +1534,7 @@ function applyHorasZN(rows, fuente){
   upMsg('ok','Used time AVG actualizado ('+fuente+')'+(nuevos? ' · '+nuevos+' sucursales nuevas':'')+'. El %WIP usa el promedio ene–sep, igual que el informe nacional.');
 }
 (function(){
+  if (typeof qaList !== 'function') return;   /* qaList vive en el IIFE principal del panel */
   var _qa = qaList;
   qaList = function(){
     var cards = _qa();
